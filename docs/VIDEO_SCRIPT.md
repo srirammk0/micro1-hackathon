@@ -1,36 +1,16 @@
-# Video script: Front Desk Bench (5 minutes max)
+# Video script: Front Desk Bench (target 4:30, limit 5:00)
 
-Target runtime: 4:40, leaving buffer under the 5:00 limit. Narration in the script is a draft; numbers are placeholders until the full run exists. Do not read placeholder numbers aloud.
+About 580 words at ~130 wpm. Screen recording plus narration (AI voice allowed). Upload unlisted to YouTube or Drive "anyone with the link"; test it in a private window with audio. Never show `.env`.
 
-## Recording tips
+| Time | On screen | Narration |
+|---|---|---|
+| 0:00–0:30 | Results page hero (`docs/index.html`) | "I've built SMS agents that text clients for businesses. The failures that hurt in production aren't bad replies. They're a reminder that still goes out after a reschedule, a text at 9 PM in the client's timezone, or a status update that says 'done' when it isn't. Front Desk Bench measures exactly that." |
+| 0:30–1:15 | `scenarios/s01_reschedule.json` timeline, then `frontdesk/sandbox.py` `advance()` | "Each model runs a fictional salon's texting for one simulated day. The clock moves, several clients text, reminders fire on their own, a number bounces, the owner gives instructions. The sandbox only blocks impossible actions like double-booking. Rule-breaking actions go through and get logged, so we can catch them." |
+| 1:15–2:00 | `frontdesk/grade.py` `grade()`, then a trial's verdict list on the page | "Three verdicts, all code, no LLM judge. Task: is the final state right. Trusted: nothing forbidden happened on the way. Report: does the agent's end-of-day report match the sandbox. Every rule the grader checks is written in the system prompt. And the grader is tested: 51 tests with reference solutions, alternative correct ones, and deliberately wrong ones that must fail for the right reason." |
+| 2:00–2:50 | Leaderboard, then the scenario grid | "Seven models, 232 graded trials, $5.66 total. The frontier models, Sonnet 5.5, GPT-6.1 Sol and Gemini 4 Argon, passed 71 of 72. The fast tier, the models you'd actually run on every message, passed 65%. In 36 of those trials the calendar was right, and the agent still broke a rule or misreported its day." |
+| 2:50–3:40 | Transcript viewer: Haiku 5.5, s06, any trial; scroll to 21:15 | "Here's the clearest one. At 9:15 PM a New York client asks to move his appointment. Haiku does it correctly, then texts him back right away, at 9:15 PM, inside quiet hours. Every Haiku trial did this. Then DeepSeek, s04: four texts in a row to a number that bounced every time." |
+| 3:40–4:05 | "Where they break" and "Did it say something false?" sections | "False claims, a report that contradicts the sandbox, cluster in the cheapest models: GLM 22% of trials, frontier zero. I call them false claims, not lies, because we see statements and state, not intent." |
+| 4:05–4:20 | README "What changed during the build" | "I audited every failure before trusting it. That found four grader bugs, like requiring a stylist the client only said was fine. Each was fixed, tested, and regraded offline; the first run is kept in the repo." |
+| 4:20–4:35 | Terminal: `python run.py selftest` | "Everything reruns from a clean clone with one OpenRouter key; the grader tests and offline regrade need none. The lesson: the trust gap is a tier gap, and it hides behind a correct-looking calendar. Thanks for watching." |
 
-- Screen recording with narration. AI-generated voice is allowed; facecam is optional.
-- Export MP4 at 1080p. Check audio before upload.
-- Upload to a host that gives a public or unlisted link that plays without sign-in (for example YouTube unlisted or Google Drive "anyone with the link"). Test the link in a private browser window with audio on.
-- Keep the video under 5:00 on the player's counter. Speak at a steady pace (about 130 words per minute), so ~600 words is about 4:40.
-- Show the actual terminal commands and actual output files. Do not show `.env` or any key; keep the terminal window clear of it.
-- Re-check that every number on screen matches `results/raw/<run_id>/REPORT.md`.
-
-## Timeline
-
-| Time | Segment | Shot list (what is on screen) | Narration (draft) |
-|---|---|---|---|
-| 0:00 to 0:30 | Problem hook | Title card "Front Desk Bench". Cut to a text thread on a phone mockup: two clients, one reschedule. | "A salon front desk runs on texts and a calendar. Agents can write a nice reply. The hard part is keeping the calendar, reminders and the owner report consistent across a whole day. And agents tend to say 'done' whether or not it is." |
-| 0:30 to 1:20 | The sandbox and one live scenario | Repo tree in editor (`frontdesk/`, `scenarios/`, `checks/`). Open `scenarios/s01_reschedule.json`, scroll the timeline. Run `python run.py run --scenarios s01_reschedule --models <one model> --trials 1` (or show a pre-recorded terminal capture if the live run is slow). | "The world is an in-memory salon with a fixed clock. Between steps, new texts arrive, a reminder fires automatically, and at the end the agent must file a structured report. Each trial starts from a fresh sandbox." |
-| 1:20 to 2:10 | The three verdicts | Split screen: `checks/s01_reschedule.py` task checks on the left; `grade.py` trusted rules on the right. Show the `grade` output dict for one trial with each verdict highlighted. | "Three deterministic verdicts. Task: is the final state right? Trusted: did the agent do anything forbidden, like texting during the client's quiet hours? Report fidelity: does the end-of-day report match the state? No LLM judge is in the score." |
-| 2:10 to 3:00 | Results charts | `docs/img/pass_rates_by_model.png`, then `docs/img/heatmap_scenario_by_model.png`. | "Across [N] trials per scenario and [M] models, [TODO(results): headline number]. The heatmap shows where each model fails. [TODO(results): one sentence on the pattern.]" |
-| 3:00 to 3:50 | One failure transcript | Open the failing trial JSON, scroll to the tool calls around the failing step, highlight the report fields that disagree with the final state. | "Here is a real failure, trial [TODO(results): path]. At [TODO(results): step], the agent [TODO(results): exact action]. The report then says [TODO(results): quote]. The state says [TODO(results): quote]." |
-| 3:50 to 4:20 | LLM-judge hot take | Slide with the question "Would a judge reading the transcript catch this?". Show judge agreement numbers if the study was run. | "A natural shortcut is to have a model read the transcript and grade it. [TODO(results): what the judge study found, or if not run, remove this segment and say 'future work'.] Sandbox state is the ground truth that the transcript can hide." |
-| 4:20 to 4:40 | How to reproduce | Terminal: `python run.py selftest`, then `python run.py run ...` and `python run.py report ...` (show, do not run the paid run live). Show README "Setup" section. | "Everything reruns from a clean environment with one key. Offline grading and the selftest need no key." |
-| 4:40 to 4:55 | Limits and close | Slide: limitations list (scenario count, fictional business, nondeterministic sampling). | "This is two [TODO(results): or more] scenarios, one fictional salon, and a few trials per model. Treat it as a method you can extend, not a leaderboard. Thanks for watching." |
-
-## Narration word budget
-
-- Total draft narration: about 600 words for 4:40 at 130 wpm. Cut the judge segment first if over time.
-
-## Placeholders to fill after the full run
-
-- `[N]` trials per scenario, `[M]` models: from `results/raw/<run_id>/REPORT.md`.
-- Headline number and the heatmap pattern: from `REPORT.md` and the chart.
-- Failure transcript path, step, and quoted report and state text: from the trial file. Quote only what is in the file.
-- Judge study result: only if run. Otherwise remove the segment.
+Check every number against `results/raw/final/REPORT.md` and `results/raw/frontier/REPORT.md` before recording.

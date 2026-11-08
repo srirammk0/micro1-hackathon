@@ -1,3 +1,5 @@
+> **Historical:** the plan written before the build (Nov 8 morning). Models, scenario details and the judge study changed; README.md describes what was actually built and run.
+
 # Front Desk Bench: Build Plan
 
 Entry for the micro1 Eval Hackathon: "Find What AI Can't Do Yet."

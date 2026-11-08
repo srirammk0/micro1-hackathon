@@ -1,86 +1,37 @@
 # Submission checklist: Front Desk Bench
 
-Status key: [x] done in repo, [ ] TODO. "Author" = must be done personally by the author.
-Source of requirements: the event context file (Eval Hackathon participant guide and submission page).
+[x] done in repo, [ ] still to do. **You** = must be done personally.
 
-## 1. Deliverables
+## Still to do (you)
 
-- [ ] **ZIP, 50 MB max, README.md at ZIP root.** See packaging steps below. Author: confirm size and layout after packaging.
-- [ ] **Video walkthrough link, 5 minutes max**, in the submission field and in README. Public or unlisted, opens without access request, plays with audio. See `docs/VIDEO_SCRIPT.md`. Video link in README: `README.md` ("Video walkthrough"). TODO: link.
-- [ ] **Short description**, in the submission field and in README. See the field values below. README: `README.md` ("Short description"), key finding still TODO.
-- [ ] **Accept the micro1 Participant Agreement.** Author: personally, in the submission form. Not done by the agent.
-- [ ] **Submit before 9:15 PM Pacific, Nov 8 2026.** Only the latest complete submission is evaluated, so re-submit after any update. Author.
+- [ ] Write what you personally reviewed in README "Sources and AI use" (only you can say it truthfully).
+- [ ] Record the video (`docs/VIDEO_SCRIPT.md`), upload unlisted, test the link in a private window with audio.
+- [ ] Paste the video link into README (`**Video:** TODO`) and the submission form.
+- [ ] Rebuild the ZIP after those README edits (command below) and upload it.
+- [ ] Paste the short description into the form.
+- [ ] Accept the micro1 Participant Agreement yourself.
+- [ ] Submit before 9:15 PM PT, Nov 8. Only the latest complete submission counts.
 
-## 2. Required README content (rubric context: README, section order as in the context file)
+## Deliverables in the repo
 
-- [x] Short description: domain, gap, key finding. `README.md` ("Short description"). Key finding: TODO(results).
-- [ ] Video link (submission and README). TODO: link (`README.md` "Video walkthrough").
-- [x] Domain and the real expertise the eval draws on. `README.md` ("Domain and expertise"). Author: confirm expertise wording.
-- [x] What it tests, who it is for, why failures matter. `README.md` ("What it tests, who it is for, why failures matter").
-- [x] Setup and run steps from a clean environment. `README.md` ("Setup from a clean environment"). Author: verify from a fresh venv before submitting.
-- [x] How keys are supplied (environment variable) and approximate runtime and cost. `README.md` ("API key", "Runtime and cost"). TODO: measured runtime and cost.
-- [ ] Exact tested model IDs and versions, run date, temperature and other settings, trials per task, scores. `README.md` ("Models and settings") has IDs and settings. TODO: run date, returned model strings, final temperature decision, scores.
-- [x] Scoring logic and metric definitions (pass rate, pass@k, pass^k). `README.md` ("What the verdicts check").
-- [ ] Failure analysis grounded in actual transcripts. `README.md` ("Failure analysis"). TODO(results).
-- [ ] LLM-judge study, or state that it is not done. `README.md` ("LLM-judge side study"). TODO: judge not built yet.
-- [x] Prior work, sources, reused benchmarks and datasets, licenses, what existed before the event. `README.md` ("Prior work and sources"). TODO: confirm no reused data; list dependency licenses.
-- [ ] AI tool disclosure: which parts AI drafted and how the author reviewed them. `README.md` ("AI tool disclosure"). TODO(author).
-- [ ] License. TODO(author): no LICENSE file yet.
-- [x] Limitations. `README.md` ("Limitations").
+- [x] README with description, domain/expertise, who it's for, run steps, key handling, runtime/cost, model IDs, settings, trials, scores, failure analysis, audit history, limitations, sources, AI use.
+- [x] 8 scenarios (`scenarios/`), grader rules (`checks/`, `frontdesk/grade.py`), all rules stated in the prompt (`frontdesk/agent.py`).
+- [x] Reference, alternative and negative solutions (`reference/`), 51 grader tests (`python run.py selftest`).
+- [x] Raw transcripts and scores: `results/raw/final` (fast tier, 160), `results/raw/frontier` (72), plus `pilot1` and `main1` audit runs.
+- [x] Results page generated from raw data (`docs/index.html`).
+- [x] `requirements.txt`, `.env.example` (names only), MIT `LICENSE`.
+- [x] No LLM judge in the score, so no judge validation needed. The judge side study was not built; README doesn't claim it.
 
-## 3. Required supporting contents
+## Build and check the ZIP
 
-- [ ] Task inputs and expected outputs or grading criteria. Present for implemented scenarios: `scenarios/s01_reschedule.json`, `scenarios/s04_delivery_failure.json`, `scenarios/business.json` (inputs); `checks/s01_reschedule.py`, `checks/s04_delivery_failure.py` (grader rules). TODO: the organizers recommend 5 to 10 tasks; only 2 exist (see section 6).
-- [x] Scoring logic. `frontdesk/grade.py`, `checks/`.
-- [x] Reference solutions verified through the graders. `reference/s01_reschedule.json`, `reference/s04_delivery_failure.json`; verified by `python run.py selftest` (12 tests pass, offline, no API key). Re-run before packaging.
-- [x] Negative tests: wrong answers must fail. `reference/*.json` (`negatives`), checked in `tests/test_graders.py`.
-- [x] Alternative valid trajectories must pass. `reference/*.json` (`alternatives`), checked in `tests/test_graders.py`.
-- [ ] Raw model outputs and scores from our own real runs. `results/raw/<run_id>/` (generated by `python run.py run`). TODO: no real runs exist yet. Do not add fake files.
-- [ ] `results/summary.csv` and `results/REPORT.md`. Generated by `python run.py report`, which writes them into the run directory (`results/raw/<run_id>/`). TODO(results).
-- [ ] Charts. `scripts/make_charts.py` writes `docs/img/`. TODO: run after the full run.
-- [x] Dependencies file. `requirements.txt` (`openai>=2.0`, `pytest>=8.0`).
-- [x] `.env.example` with variable names only. `.env.example` (`OPENROUTER_API_KEY=`, no value).
-- [ ] If using an LLM judge: its model, prompt, rubric, and evidence of reliability. Not built yet (`frontdesk/judge.py` does not exist). TODO, or drop the study.
+```bash
+cd "/Users/sriram.mk/Documents/Personal/Side Projects/Hackathons/micro1"
+rm -f front-desk-bench.zip && zip -qr front-desk-bench.zip . -x ".env" ".git/*" ".venv/*" "*/.pytest_cache/*" ".pytest_cache/*" "*/__pycache__/*" "*.DS_Store" "*.zip" ".claude/*"
+unzip -l front-desk-bench.zip | grep -E " README.md$|\.env" ; ls -lh front-desk-bench.zip
+```
 
-## 4. Never include (check before packaging)
+README.md must appear at the top level, `.env.example` only (no `.env`), size under 50 MB.
 
-- [ ] No videos or large datasets in the ZIP. Link the video instead.
-- [ ] No `.env` file (contains a real key). It is git-ignored, but ZIP packaging does not use git, so exclude it explicitly (see below).
-- [ ] No credentials, tokens or keys anywhere: transcripts, logs, config, README. Grep the raw transcripts for `sk-` and `OPENROUTER` before packaging.
-- [ ] No confidential or personal data. All names and phone numbers in scenarios are fictional (`+1212555...` numbers).
-- [ ] No fabricated results, model versions or review claims. Every number in README comes from `results/raw/`.
+## Short description (for the form)
 
-## 5. Packaging steps
-
-1. Work from a clean copy of the repo at the frozen commit (no uncommitted edits you do not intend to submit). Do not run `git commit` or `git push` from the agent; the author decides.
-2. Run `python run.py selftest` and confirm all tests pass.
-3. Regenerate `REPORT.md` and charts from raw files only: `python run.py report results/raw/<run_id>` then `python scripts/make_charts.py results/raw/<run_id>/summary.csv`.
-4. Build the ZIP from inside the project folder so `README.md` lands at the ZIP root:
-
-   ```bash
-   cd "/Users/sriram.mk/Documents/Personal/Side Projects/Hackathons/micro1"
-   zip -r "$HOME/Desktop/front-desk-bench-submission.zip" . \
-     -x ".env" ".git/*" ".venv/*" ".pytest_cache/*" "*/__pycache__/*" "*.DS_Store" "*.zip"
-   ```
-
-5. Check the ZIP:
-   - `unzip -l "$HOME/Desktop/front-desk-bench-submission.zip" | head` shows `README.md` at the top level, with no parent folder.
-   - `unzip -l ... | grep -c "\.env$"` prints `0`.
-   - `ls -l "$HOME/Desktop/front-desk-bench-submission.zip"` shows size under 50 MB (50,000,000 bytes; the limit is 50 MB).
-6. Fresh-environment test: unzip into an empty folder (not the project folder), follow the README setup, run `python run.py selftest`.
-
-## 6. Known gaps to close or disclose
-
-- Only 2 of the 8 planned scenarios exist (s01, s04). The organizers recommend 5 to 10 tasks. Either build more, or disclose the count honestly in README and video.
-- `frontdesk/judge.py` (LLM judge) is in the plan but not in the repo.
-- `results/` does not exist yet, so no raw runs or charts exist.
-- Trusted checks for draft-versus-send and "re-asking owner" (`PLAN.md` 8.2) are not coded.
-
-## 7. Submission form fields
-
-Fill these yourself in the submission form. Do not let the agent submit or accept on your behalf.
-
-- **Short description** (suggested, edit to final results): "Front Desk Bench tests whether frontier LLM agents can run a small salon's client texts, calendar, reminders and end-of-day owner report correctly over a simulated day. Grading is deterministic (sandbox state and action log, no LLM judge), and the key gap it probes is whether an agent's 'all done' report matches what actually happened. Key finding: TODO(results)."
-- **Video link:** TODO(author), public or unlisted, with audio, 5 minutes or less.
-- **Repository or ZIP:** the ZIP from section 5.
-- **Participant Agreement:** TODO(author), accept personally.
+Front Desk Bench: an agent runs a small salon's client texting, calendar and reminders for a simulated day, graded deterministically on final sandbox state, the action log and whether its end-of-day report is true (no LLM judge). Frontier models (Sonnet 5.5, GPT-6.1 Sol, Gemini 4 Argon) passed 71 of 72 trials; the fast tier used for high-volume texting passed 65% of 160, often with a correct calendar hiding a broken rule or a false report.
