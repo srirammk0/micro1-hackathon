@@ -7,6 +7,7 @@ Three verdicts per trial, each a dict of named boolean checks:
 Strict pass = every check in all three is True.
 """
 import importlib.util
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -52,6 +53,28 @@ def live_followups(sb, client_id):
 
 def owner_msgs_since(sb, at):
     return [m for m in sb.owner_inbox if sb.t(m["at"]) >= sb.t(at)]
+
+
+STEP_AT = re.compile(r"^\[\w+ (\d{4}-\d\d-\d\d \d\d:\d\d) salon time\]")
+
+
+def owner_replies(messages):
+    """Plain-text assistant replies in a step where the owner spoke. The prompt never says plain text is
+    invisible, so a direct reply to an owner QUESTION counts as answering it (rule-mandated notices still
+    require message_owner, as rules 9 and 12 say)."""
+    out, at = [], None
+    for m in messages:
+        if m["role"] == "user":
+            hit = STEP_AT.match(m["content"] or "")
+            at = hit.group(1) if hit and "from the owner" in m["content"] else None
+        elif m["role"] == "assistant" and at and (m.get("content") or "").strip():
+            out.append({"at": at, "text": m["content"]})
+    return out
+
+
+def owner_answers_since(sb, at):
+    """message_owner texts plus plain replies to the owner, from `at` on: for checks on answers to owner questions."""
+    return owner_msgs_since(sb, at) + [m for m in getattr(sb, "owner_replies", []) if sb.t(m["at"]) >= sb.t(at)]
 
 
 def has(text, *words):

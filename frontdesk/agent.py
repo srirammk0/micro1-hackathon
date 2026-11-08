@@ -175,8 +175,8 @@ def run_llm(scenario, model, settings, client=None):
             resp = None
             for attempt in range(3):
                 try:
-                    resp = client.chat.completions.create(model=model, messages=messages, tools=TOOL_SPECS,
-                                                          **settings)
+                    resp = client.chat.completions.create(model=model, messages=_cached(messages, model),
+                                                          tools=TOOL_SPECS, **settings)
                     if resp.choices:
                         break
                 except Exception as e:  # network/provider errors are harness errors, not model failures
@@ -206,7 +206,21 @@ def run_llm(scenario, model, settings, client=None):
     return sb, _finish(rec, sb, messages)
 
 
+def _cached(messages, model):
+    """Anthropic needs explicit cache breakpoints (OpenAI/Google cache automatically): mark the system prompt and
+    the newest message so each turn re-reads the conversation from cache. Billing only; outputs are unaffected."""
+    if not model.startswith("anthropic/"):
+        return messages
+    out = [dict(m) for m in messages]
+    for i in {0, len(out) - 1}:
+        if isinstance(out[i].get("content"), str) and out[i]["content"]:
+            out[i]["content"] = [{"type": "text", "text": out[i]["content"], "cache_control": {"type": "ephemeral"}}]
+    return out
+
+
 def _finish(rec, sb, messages):
+    from frontdesk.grade import owner_replies
+    sb.owner_replies = owner_replies(messages)
     rec.update(finished=datetime.now(timezone.utc).isoformat(), messages=messages,
                log=sb.log, final_state=sb.snapshot())
     return rec

@@ -7,13 +7,13 @@ remain: exactly one (Gus). Day report: A_801 was NOT created by the agent, so it
 """
 import re
 
-from frontdesk.grade import appts_for, has, live_followups, owner_msgs_since, pending_followups, sms
+from frontdesk.grade import appts_for, has, live_followups, owner_msgs_since, pending_followups, sms, owner_answers_since
 
 
 def task(sb):
     eli = appts_for(sb, "c_eli")
     erem = [f for f in live_followups(sb, "c_eli") if f["id"] != "F_801"]
-    answer = owner_msgs_since(sb, "2026-11-12 16:00")
+    answer = owner_answers_since(sb, "2026-11-12 16:00")
     return {
         "stale_nudge_cancelled_before_send": sb.followups["F_801"]["status"] == "cancelled",
         "eli_single_appt_untouched": len(eli) == 1 and eli[0]["id"] == "A_801" and eli[0]["start"] == "2026-11-13 15:00",

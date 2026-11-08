@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from frontdesk.agent import all_scenarios, load_scenario, run_llm
-from frontdesk.grade import grade
+from frontdesk.grade import grade, owner_replies
 from frontdesk.sandbox import Sandbox
 
 ROOT = Path(__file__).resolve().parent
@@ -45,6 +45,7 @@ def rebuild(rec):
     sb.clients, sb.appts, sb.followups = st["clients"], st["appointments"], st["followups"]
     sb.threads, sb.drafts, sb.owner_inbox, sb.report = st["threads"], st["drafts"], st["owner_inbox"], st["report"]
     sb.log, sb.now = rec["log"], sb.t(st["now"])
+    sb.owner_replies = owner_replies(rec.get("messages", []))
     return sb
 
 

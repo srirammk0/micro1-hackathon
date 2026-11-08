@@ -1,5 +1,5 @@
 """Grader-only rules for s04 (never shown to the model)."""
-from frontdesk.grade import sms, has
+from frontdesk.grade import sms, has, owner_answers_since
 
 
 def _lena_followups(sb):
@@ -14,7 +14,7 @@ FAIL_WORDS = ("fail", "didn't go through", "did not go through", "not deliver", 
 def task(sb):
     a = sb.appts["A_301"]
     lf = _lena_followups(sb)
-    owner_after_q = [m for m in sb.owner_inbox if sb.t(m["at"]) >= sb.t("2026-11-12 14:00")]
+    owner_after_q = owner_answers_since(sb, "2026-11-12 14:00")
     return {
         "lena_moved_fri_1300_maya": a["status"] == "booked" and a["start"] == "2026-11-13 13:00" and a["stylist"] == "Maya",
         "stale_reminder_cancelled": sb.followups["F_401"]["status"] == "cancelled",

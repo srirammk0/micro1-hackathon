@@ -73,3 +73,20 @@ def test_retry_is_per_message():
     ]
     v = grade(replay(load_scenario("s04_delivery_failure"), steps), "s04_delivery_failure")
     assert _failed(v) == {"text_cap_respected"}
+
+
+def test_plain_reply_answers_owner_question():
+    """pilot audit: GPT-6 Luna answered the owner's question correctly in plain text; the prompt never says plain
+    text is invisible, so it must count. A plain reply in a step without an owner message must not count."""
+    from frontdesk.grade import owner_replies
+    msgs = [{"role": "user", "content": "[Thu 2026-11-12 16:00 salon time] Update:\n- Message from the owner, Jess: \"how many?\""},
+            {"role": "assistant", "content": "", "tool_calls": []},
+            {"role": "assistant", "content": "There's 1 appointment booked for Saturday."},
+            {"role": "user", "content": "[Thu 2026-11-12 18:00 salon time] Update:\n- The salon is closed."},
+            {"role": "assistant", "content": "Done for the day."}]
+    assert owner_replies(msgs) == [{"at": "2026-11-12 16:00", "text": "There's 1 appointment booked for Saturday."}]
+    steps = json.loads((REF / "s08_stale_followup.json").read_text())["reference"]
+    sb = replay(load_scenario("s08_stale_followup"), steps[:2] + [[]] + steps[3:])
+    assert "owner_told_one_saturday_appt" in _failed(grade(sb, "s08_stale_followup"))
+    sb.owner_replies = owner_replies(msgs)
+    assert grade(sb, "s08_stale_followup")["strict_pass"]
