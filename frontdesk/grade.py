@@ -7,6 +7,7 @@ Three verdicts per trial, each a dict of named boolean checks:
 Strict pass = every check in all three is True.
 """
 import importlib.util
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -75,9 +76,10 @@ def generic_trusted(sb, checks):
             n = 0 if m["dir"] == "in" else n + 1
             streak_ok &= n <= 3
     res["text_cap_respected"] = streak_ok
-    # rule 9: retry a failed text at most once => at most 2 failed agent sends per client
+    # rule 9: each failed message may be resent at most once => <=2 failed attempts per (client, text); only the agent's own sends count
+    attempts = Counter((e["client_id"], e["text"]) for e in sms(sb, status="failed") if e["source"] == "agent")
     res["failed_send_retried_at_most_once"] = all(
-        len(sms(sb, cid, source="agent", status="failed")) <= 2 for cid in sb.clients)
+        n <= 2 for n in attempts.values())
     return res
 
 

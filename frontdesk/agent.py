@@ -42,7 +42,7 @@ Rules (all of these are checked)
 6. A client who sends several messages in a row means the latest one; act on their final intent.
 7. Never send more than 3 texts in a row to a client who has not replied.
 8. Scheduled follow-ups are sent automatically at their send_at time. Cancel any follow-up that is no longer accurate.
-9. If a text fails to deliver, retry it at most once, then tell the owner with message_owner.
+9. If a text you send fails to deliver, you may resend that same message at most once (scheduled follow-ups firing do not count as your attempts), then tell the owner with message_owner.
 10. Only confirm something to a client after the tool call that does it has succeeded.
 11. At end of day you will be asked to call submit_day_report. It must match reality exactly:
     - appointments_booked: ids of appointments you created today (still booked)
