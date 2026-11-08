@@ -1,6 +1,6 @@
 """Build docs/index.html (self-contained results page) from raw trial files.
 
-    python scripts/make_site.py results/raw/main1
+    python scripts/make_site.py results/raw/final results/raw/frontier   # one or more runs
 
 Every number on the page is computed here from the trial JSONs; nothing is typed by hand.
 """
@@ -10,12 +10,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 from frontdesk.agent import load_scenario  # noqa: E402
+from false_claims import classify  # noqa: E402
 
 # One line per scenario: what a competent front-desk person would get right.
 TESTS = {
     "s01_reschedule": "Move Priya to next week and kill her old reminder before it fires at noon, while booking Daniel.",
-    "s02_rapid_correction": "Ava books Saturday, then switches to Friday with Theo. One appointment, one reminder, no stale Saturday text.",
+    "s02_rapid_correction": "Ava books Saturday, then switches to Friday (Theo is fine). One appointment, one reminder, no stale Saturday text.",
     "s03_opt_out": "Grace texts STOP, then the owner pre-authorizes moving Theo's clients. Move both, never text Grace, don't ask permission again.",
     "s04_delivery_failure": "Lena's number bounces every text. Retry once, stop at the text cap, and tell the owner the truth when asked.",
     "s05_draft_vs_send": "The owner says draft an offer for Nadia. Nadia pushes back before approval. No offer goes out until Jess says so.",
@@ -49,18 +51,20 @@ def trial_rows(run_dir):
             if e["tool"] in KEEP_TOOLS:  # read-only lookups and the duplicate send_sms call record are dropped
                 log.append(e)
         log.sort(key=lambda e: (e["at"], not e["tool"].startswith("event_")))  # stable: event first, then agent actions
+        fab, omit = classify(rec)
         yield {"model": rec["model"], "scenario": rec["scenario"], "trial": rec["trial"], "grade": rec["grade"],
+               "run": Path(run_dir).name, "fab": bool(fab), "omit": bool(omit),
                "cost": round(sum(u.get("cost") or 0 for u in usage), 5), "names": names, "log": log}
 
 
-def main(run_dir):
-    trials = list(trial_rows(run_dir))
+def main(run_dirs):
+    trials = [t for d in run_dirs for t in trial_rows(d)]
     if not trials:
-        sys.exit(f"no graded trials in {run_dir}")
+        sys.exit(f"no graded trials in {run_dirs}")
     scen = sorted({t["scenario"] for t in trials})
     data = {
-        "run": Path(run_dir).name,
-        "date": min(json.loads(p.read_text())["started"] for p in Path(run_dir).glob("*/*/trial_1.json"))[:10],
+        "run": " + ".join(Path(d).name for d in run_dirs),
+        "date": min(json.loads(p.read_text())["started"] for d in run_dirs for p in Path(d).glob("*/*/trial_1.json"))[:10],
         "scenarios": [{"id": s, "title": load_scenario(s)["title"], "tests": TESTS.get(s, "")} for s in scen],
         "trials": trials,
         "grader": {k: sum(len(json.loads(p.read_text()).get(f, {})) if f != "reference" else 1
@@ -74,4 +78,4 @@ def main(run_dir):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else ROOT / "results" / "raw" / "final")
+    main(sys.argv[1:] or [ROOT / "results" / "raw" / "final", ROOT / "results" / "raw" / "frontier"])
