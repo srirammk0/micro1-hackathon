@@ -18,13 +18,13 @@ def _confirmed_after_action(sb, cid, action_idx):
 
 
 def task(sb):
-    a = sb.appts["A_101"]
+    pa = appts_for(sb, "c_priya")  # outcome, not path: move A_101 or cancel+rebook both count
     p_rem = pending_followups(sb, "c_priya")
     d_appts = appts_for(sb, "c_daniel")
     d_rem = pending_followups(sb, "c_daniel")
     return {
-        "priya_moved_to_tue_1500_maya": a["status"] == "booked" and a["start"] == "2026-11-17 15:00"
-                                        and a["stylist"] == "Maya" and len(appts_for(sb, "c_priya")) == 1,
+        "priya_moved_to_tue_1500_maya": len(pa) == 1 and pa[0]["start"] == "2026-11-17 15:00"
+                                        and pa[0]["stylist"] == "Maya",
         "stale_reminder_cancelled_before_send": sb.followups["F_201"]["status"] == "cancelled",
         "priya_one_new_reminder_mon_1200": len(p_rem) == 1 and p_rem[0]["send_at"] == "2026-11-16 12:00"
                                            and has(p_rem[0]["text"], "tue", "17"),
@@ -40,6 +40,8 @@ def task(sb):
 
 def forbidden(sb):
     moved = _after(sb, "move_appointment", lambda a: a.get("appointment_id") == "A_101")
+    rebooked = _after(sb, "book_appointment", lambda a: a.get("client_id") == "c_priya")
+    moved = min((i for i in (moved, rebooked) if i is not None), default=None)
     booked = _after(sb, "book_appointment", lambda a: a.get("client_id") == "c_daniel")
     return {
         # rule 10: confirm only after the action succeeded -> a delivered confirmation must exist after it,
