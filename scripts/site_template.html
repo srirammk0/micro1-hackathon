@@ -1,211 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Front Desk Bench</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: appointment-book spine (sticky sidebar) + one scrolling workspace of panels; collapses to a top bar on phones. */
 :root {
-  --bg: #f2f5f3; --panel: #ffffff; --ink: #15201c; --muted: #5a6863; --faint: #8b9792;
-  --line: #dde3e0; --soft: #edf1ef;
-  --accent: #7a2e5a; --accent-soft: #f5e8ef;
-  --pass: #1e7a4c; --pass-soft: #e4f3ea; --fail: #bb3a2c; --fail-soft: #fbebe9; --warn: #8f6200; --warn-soft: #fcf2d8;
-  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --shadow: 0 1px 2px rgba(21,32,28,.05), 0 6px 22px rgba(21,32,28,.05);
+  --bg: #ffffff; --ink: #1b1a17; --muted: #6f6b64; --ghost: #b3aea6; --line: #ece9e4; --soft: #f6f4f1; --tint: #fbf8f3;
+  --accent: #a8541f; --accent-soft: #f7ece3; --chip: #1b1a17; --chip-ink: #fff;
+  --pass: #2f7d4f; --pass-soft: #e9f4ec; --fail: #c2412f; --fail-soft: #fbecea; --part: #9a6a00; --part-soft: #fbf1d9;
+  --sans: "Geist", -apple-system, "Segoe UI", Arial, sans-serif; --mono: "Geist Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f1412; --panel: #161d1a; --ink: #e4ebe8; --muted: #97a59f; --faint: #6c7a74;
-  --line: #26302c; --soft: #1c2420; --accent: #e48cba; --accent-soft: #3a1d2d;
-  --pass: #63cf96; --pass-soft: #12281c; --fail: #f08b7d; --fail-soft: #331a18; --warn: #e5b75b; --warn-soft: #2d2413;
-  --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark; } }
+  --bg: #121110; --ink: #ecebe7; --muted: #a29e96; --ghost: #5f5b55; --line: #2a2825; --soft: #1c1b19; --tint: #1a1815;
+  --accent: #e39a62; --accent-soft: #33241a; --chip: #ecebe7; --chip-ink: #121110;
+  --pass: #6fcf95; --pass-soft: #15281c; --fail: #f08a7a; --fail-soft: #331b17; --part: #e3bb5e; --part-soft: #2e2512; color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0f1412; --panel: #161d1a; --ink: #e4ebe8; --muted: #97a59f; --faint: #6c7a74;
-  --line: #26302c; --soft: #1c2420; --accent: #e48cba; --accent-soft: #3a1d2d;
-  --pass: #63cf96; --pass-soft: #12281c; --fail: #f08b7d; --fail-soft: #331a18; --warn: #e5b75b; --warn-soft: #2d2413;
-  --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark; }
+  --bg: #121110; --ink: #ecebe7; --muted: #a29e96; --ghost: #5f5b55; --line: #2a2825; --soft: #1c1b19; --tint: #1a1815;
+  --accent: #e39a62; --accent-soft: #33241a; --chip: #ecebe7; --chip-ink: #121110;
+  --pass: #6fcf95; --pass-soft: #15281c; --fail: #f08a7a; --fail-soft: #331b17; --part: #e3bb5e; --part-soft: #2e2512; color-scheme: dark; }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font: 14px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
-a { color: var(--accent); }
-h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
-h1 { font-size: clamp(28px, 4.2vw, 42px); font-weight: 700; line-height: 1.08; }
-h2 { font-size: 21px; font-weight: 700; }
-h3 { font-size: 15px; font-weight: 700; }
-p { margin: 0; max-width: 68ch; color: var(--muted); }
-.mono, code { font-family: var(--mono); font-size: 12.5px; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-left)) 96px; }
+a { color: inherit; }
+h1, h2, h3 { font-weight: 400; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(34px, 6vw, 48px); line-height: 1.08; }
+h1 span { color: var(--ghost); }
+h2 { font-size: clamp(24px, 3.6vw, 30px); line-height: 1.2; }
+p { margin: 0; color: var(--ink); }
+.lede { font-size: 18px; color: var(--ink); opacity: .86; max-width: 62ch; }
+.sub { color: var(--muted); font-size: 15px; max-width: 64ch; }
 .num { font-variant-numeric: tabular-nums; }
-.eyebrow { font: 600 11px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; color: var(--accent); }
+.mono { font-family: var(--mono); }
 
-.shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100vh; }
-.side { position: sticky; top: 0; height: 100vh; border-right: 1px solid var(--line); background: var(--panel);
-  display: flex; flex-direction: column; gap: 28px; padding: 22px 16px; }
-.brand { display: flex; align-items: center; gap: 10px; font: 700 17px/1.1 var(--display); letter-spacing: -0.02em; }
-.brand svg { flex: none; color: var(--accent); }
-.brand small { display: block; font: 500 11px var(--body); color: var(--muted); letter-spacing: 0; }
-.nav { display: grid; gap: 2px; }
-.nav a { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 7px; color: var(--muted);
-  text-decoration: none; font-weight: 500; }
-.nav a:hover, .nav a:focus-visible { background: var(--soft); color: var(--ink); outline: none; }
-.nav a span { font: 500 11px var(--mono); color: var(--faint); width: 18px; }
-.side-foot { margin-top: auto; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 4px; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none; }
+.brand svg { color: var(--accent); }
+.brand .crumb { color: var(--muted); font-weight: 400; font-size: 15px; }
+.brand .crumb::before { content: "/"; color: var(--ghost); margin: 0 10px 0 4px; }
+.btn { background: var(--accent); color: #fff; text-decoration: none; padding: 9px 18px; border-radius: 10px; font-size: 15px; }
+.btn:hover { filter: brightness(1.08); }
 
-main { padding-block: 32px 64px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 28px; max-width: 1180px; width: 100%; }
-section { display: grid; gap: 14px; scroll-margin-top: 20px; }
-.head { display: grid; gap: 6px; }
-.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); min-width: 0; }
-.pad { padding: 18px 20px; }
+.hero { padding: 48px 0 8px; display: grid; gap: 22px; }
+.eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+section { padding-top: 72px; display: grid; gap: 18px; scroll-margin-top: 16px; }
 
-.hero { display: grid; gap: 16px; padding-block: 8px 4px; }
-.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; }
-.stat b { display: block; font: 700 26px/1.1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
-.stat span { font-size: 12px; color: var(--muted); }
-.callout { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; }
-.callout .big { font: 700 56px/1 var(--display); color: var(--fail); font-variant-numeric: tabular-nums; }
-.callout p { color: var(--ink); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { font: 400 15px var(--sans); color: var(--ink); background: var(--soft); border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+.tab[aria-pressed="true"] { background: var(--chip); color: var(--chip-ink); }
+.tab:focus-visible, .row:focus-visible, .cell:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.scroll { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
-th { text-align: left; font: 600 11px var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
-  padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-td { padding: 11px 14px; border-bottom: 1px solid var(--soft); vertical-align: middle; white-space: nowrap; }
-tr:last-child td { border-bottom: 0; }
-.model { font-weight: 600; }
-.model small { display: block; font: 400 11.5px var(--mono); color: var(--faint); }
-.bar { display: flex; align-items: center; gap: 8px; min-width: 120px; }
-.bar i { flex: 1; height: 6px; border-radius: 3px; background: var(--soft); position: relative; overflow: hidden; }
-.bar i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--c, var(--accent)); border-radius: 3px; }
-.bar b { font-weight: 600; width: 38px; text-align: right; }
-.strict b { color: var(--accent); }
+.card { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.row { width: 100%; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 14px; align-items: center; text-align: left;
+  font: inherit; color: inherit; background: none; border: 0; border-top: 1px solid var(--line); padding: 20px 22px; cursor: pointer; }
+.card > .row:first-child, .card > .item:first-child .row { border-top: 0; }
+.row:hover { background: var(--tint); }
+.rank { color: var(--ghost); font-size: 17px; }
+.name { font-size: 18px; }
+.meta { display: block; color: var(--muted); font-size: 13px; }
+.score { font-size: 19px; font-variant-numeric: tabular-nums; }
+.detail { background: var(--tint); border-top: 1px solid var(--line); padding: 22px; display: none; gap: 22px; }
+.item.open .detail { display: grid; }
+.item.open .row { background: var(--tint); }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 24px; }
+.kpi span { display: block; font-size: 13px; color: var(--muted); }
+.kpi b { font-weight: 400; font-size: 26px; font-variant-numeric: tabular-nums; }
+.bars { display: grid; gap: 8px; }
+.bars .lbl { font-size: 13px; color: var(--muted); }
+.bar { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 1fr) 44px; gap: 14px; align-items: center; font-size: 14px; }
+.bar i { height: 6px; border-radius: 6px; background: var(--line); position: relative; }
+.bar i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: max(6px, var(--w)); border-radius: 6px; background: var(--accent); }
+.bar b { font-weight: 400; text-align: right; font-variant-numeric: tabular-nums; }
 
-.heat td { text-align: center; padding: 6px; }
-.heat td:first-child { text-align: left; padding: 10px 14px; white-space: normal; min-width: 220px; }
-.cell { display: inline-grid; place-items: center; width: 100%; min-width: 64px; height: 40px; border-radius: 7px; border: 0;
-  font: 600 13px var(--mono); cursor: pointer; color: var(--ink); background: color-mix(in srgb, var(--fail) calc((1 - var(--p)) * 55%), var(--pass-soft)); }
-.cell[data-full] { background: var(--pass-soft); color: var(--pass); }
-.cell:hover, .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.sid { font: 500 11px var(--mono); color: var(--faint); }
+.gap { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 28px; border-radius: 18px; background: var(--accent-soft); }
+.gap .big { font-size: clamp(56px, 10vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+.gap p { font-size: 17px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 34px; color: var(--muted); font-size: 14px; }
+.facts b { display: block; color: var(--ink); font-weight: 400; font-size: 22px; font-variant-numeric: tabular-nums; }
 
-.checks td:nth-child(n+3) { text-align: center; }
-.part { font: 600 10.5px var(--mono); padding: 2px 7px; border-radius: 99px; text-transform: uppercase; letter-spacing: .04em; }
-.part.task { background: var(--warn-soft); color: var(--warn); }
-.part.trusted { background: var(--fail-soft); color: var(--fail); }
-.part.report { background: var(--accent-soft); color: var(--accent); }
-.zero { color: var(--faint); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); align-items: center; }
+.grid { width: 100%; border-collapse: collapse; }
+.grid th { font: 400 12px/1.25 var(--sans); color: var(--muted); padding: 14px 6px; text-align: center; vertical-align: bottom; }
+.grid th:first-child { text-align: left; padding-left: 22px; }
+.grid td { border-top: 1px solid var(--line); padding: 12px 6px; text-align: center; }
+.grid td:first-child { text-align: left; padding: 14px 10px 14px 22px; font-size: 15px; }
+.grid td:first-child small { display: block; color: var(--muted); font-size: 13px; line-height: 1.45; margin-top: 2px; }
+.cell { display: inline-grid; place-items: center; min-width: 44px; height: 30px; padding: 0 8px; border-radius: 8px; border: 0; cursor: pointer;
+  font: 500 13px var(--mono); background: var(--part-soft); color: var(--part); }
+.cell.full { background: var(--pass-soft); color: var(--pass); }
+.cell.zero { background: var(--fail-soft); color: var(--fail); }
+.key { display: inline-grid; place-items: center; width: 22px; height: 20px; border-radius: 6px; font: 500 11px var(--mono); margin-right: 6px; }
 
-.explorer { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
-.controls { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px 20px; border-bottom: 1px solid var(--line); align-items: end; }
-.controls label { display: grid; gap: 4px; font: 600 11px var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
-select { font: 500 13px var(--body); padding: 7px 10px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); max-width: 100%; }
-select:focus-visible { outline: 2px solid var(--accent); }
-.verdicts { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
-.pill { font: 600 11.5px var(--body); padding: 4px 10px; border-radius: 99px; background: var(--pass-soft); color: var(--pass); }
+.breaks { display: grid; }
+.brk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 16px 22px; border-top: 1px solid var(--line); align-items: center; }
+.brk:first-child { border-top: 0; }
+.brk small { display: block; color: var(--muted); font-size: 13px; }
+.tag { font-size: 12px; padding: 3px 10px; border-radius: 999px; margin-left: 8px; white-space: nowrap; }
+.tag.task { background: var(--part-soft); color: var(--part); }
+.tag.trusted { background: var(--fail-soft); color: var(--fail); }
+.tag.report { background: var(--accent-soft); color: var(--accent); }
+.who-fail { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.who-fail span { font-size: 12px; color: var(--muted); background: var(--soft); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.who-fail b { color: var(--ink); font-weight: 500; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+select { font: 400 15px var(--sans); color: var(--ink); background: var(--soft); border: 0; border-radius: 12px; padding: 10px 14px; max-width: 100%; }
+.verdicts { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { font-size: 13px; padding: 4px 12px; border-radius: 999px; background: var(--pass-soft); color: var(--pass); }
 .pill.no { background: var(--fail-soft); color: var(--fail); }
-.timeline { padding: 8px 20px 20px; display: grid; gap: 4px; min-width: 0; }
-.tick { font: 600 11.5px var(--mono); color: var(--muted); padding: 14px 0 4px; border-bottom: 1px dashed var(--line); margin-bottom: 4px; }
-.ev { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 4px 0; align-items: start; }
-.ev .who { font: 600 11px var(--body); letter-spacing: .04em; text-transform: uppercase; color: var(--faint); padding-top: 6px; }
-.msg { padding: 8px 12px; border-radius: 10px; max-width: 62ch; overflow-wrap: anywhere; }
-.in .msg { background: var(--soft); }
-.out .msg { background: var(--accent-soft); }
-.owner .msg { background: var(--warn-soft); }
-.fu .msg { background: var(--panel); border: 1px dashed var(--line); }
-.status { display: block; font: 500 11px var(--mono); color: var(--muted); margin-top: 3px; }
-.status.failed { color: var(--fail); font-weight: 600; }
-.act { font: 400 12px var(--mono); color: var(--muted); padding-top: 4px; overflow-wrap: anywhere; }
+.chat { padding: 10px 22px 24px; display: grid; gap: 6px; }
+.tick { font: 400 12px var(--mono); color: var(--ghost); text-align: center; padding: 16px 0 4px; }
+.ev { display: grid; gap: 3px; max-width: 78%; }
+.ev .who { font-size: 12px; color: var(--muted); padding: 0 4px; }
+.msg { padding: 10px 14px; border-radius: 18px; overflow-wrap: anywhere; font-size: 15px; line-height: 1.45; }
+.ev.in { justify-self: start; } .ev.in .msg { background: var(--soft); border-bottom-left-radius: 6px; }
+.ev.out { justify-self: end; text-align: left; } .ev.out .who { text-align: right; }
+.ev.out .msg { background: var(--accent); color: #fff; border-bottom-right-radius: 6px; }
+.ev.fu .msg { background: var(--bg); color: var(--ink); border: 1px dashed var(--ghost); }
+.ev.owner { justify-self: start; } .ev.owner .msg { background: var(--part-soft); color: var(--ink); border-bottom-left-radius: 6px; }
+.ev.toowner .msg { background: var(--ink); color: var(--bg); }
+.ev.failed .msg { background: var(--fail-soft); color: var(--fail); border: 1px solid var(--fail); }
+.status { display: block; font: 400 11px var(--mono); opacity: .8; margin-top: 4px; }
+.act { justify-self: center; max-width: 92%; text-align: center; font: 400 12.5px/1.5 var(--mono); color: var(--muted); padding: 2px 0; overflow-wrap: anywhere; }
 .act b { color: var(--ink); font-weight: 500; }
-.side-checks { border-left: 1px solid var(--line); padding: 16px 18px; display: grid; gap: 16px; align-content: start; }
-.side-checks ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 4px; }
-.side-checks li { display: grid; grid-template-columns: 16px 1fr; gap: 6px; font-size: 12.5px; color: var(--ink); }
-.side-checks li.bad { color: var(--fail); font-weight: 600; }
-.side-checks li::before { content: "✓"; color: var(--pass); font-weight: 700; }
-.side-checks li.bad::before { content: "✗"; color: var(--fail); }
+.act .no { color: var(--fail); }
+.verdict-list { border-top: 1px solid var(--line); background: var(--tint); padding: 20px 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.verdict-list h3 { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.verdict-list ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13.5px; }
+.verdict-list li::before { content: "✓  "; color: var(--pass); }
+.verdict-list li.bad { color: var(--fail); } .verdict-list li.bad::before { content: "✗  "; color: var(--fail); }
 
-.method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.method .panel { display: grid; gap: 6px; align-content: start; }
-.method .k { font: 700 13px var(--display); color: var(--accent); }
-.foot { font-size: 12px; color: var(--faint); }
+.method { display: grid; gap: 26px; }
+.method h3 { font-size: 18px; margin-bottom: 4px; }
+.method p { color: var(--muted); max-width: 64ch; }
+footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.scroll { overflow-x: auto; }
 
-@media (max-width: 960px) { .explorer { grid-template-columns: 1fr; } .side-checks { border-left: 0; border-top: 1px solid var(--line); } .method { grid-template-columns: 1fr; } }
-@media (max-width: 760px) {
-  .shell { grid-template-columns: 1fr; }
-  .side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px;
-    border-right: 0; border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .nav { display: flex; flex-wrap: wrap; } .nav a { padding: 6px 8px; } .nav a span, .side-foot { display: none; }
-  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
-  .callout { grid-template-columns: 1fr; } .ev { grid-template-columns: 1fr; gap: 2px; } .ev .who { padding-top: 0; }
+@media (max-width: 640px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  .row { padding: 16px; grid-template-columns: 24px minmax(0, 1fr) auto; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bar { grid-template-columns: minmax(0, 120px) minmax(0, 1fr) 40px; font-size: 13px; }
+  .gap { grid-template-columns: 1fr; gap: 12px; padding: 22px; }
+  .brk { grid-template-columns: 1fr; padding: 14px 16px; } .who-fail { justify-content: flex-start; }
+  .ev { max-width: 92%; } .chat { padding: 8px 14px 20px; }
+  .verdict-list { grid-template-columns: 1fr; }
+  .grid td:first-child small { display: none; }
+  .grid td:first-child, .grid th:first-child { padding-left: 14px; font-size: 14px; }
+  .grid td, .grid th { padding-left: 3px; padding-right: 3px; } .cell { min-width: 38px; padding: 0 4px; font-size: 12px; }
+  .btn { display: none; }
 }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M5 20a9 9 0 0 1 18 0" stroke="currentColor" stroke-width="2.4"/><circle cx="14" cy="8.6" r="2" fill="currentColor"/><rect x="3" y="20.6" width="22" height="3" rx="1.5" fill="currentColor"/></svg>
+      Front Desk Bench<span class="crumb">Results</span>
+    </a>
+    <a class="btn" href="https://github.com/srirammk0/micro1-hackathon">View code</a>
+  </header>
 
-<div class="shell">
-  <aside class="side">
-    <div class="brand">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M5 20a9 9 0 0 1 18 0" stroke="currentColor" stroke-width="2.2" fill="none"/><circle cx="14" cy="9" r="1.8" fill="currentColor"/><rect x="3" y="20.5" width="22" height="3" rx="1.5" fill="currentColor"/></svg>
-      <div>Front Desk Bench<small>delegated-authority eval</small></div>
+  <div class="hero">
+    <div class="eyebrow">Delegated-authority eval</div>
+    <h1>Can it run the front desk <span>without lying about it?</span></h1>
+    <p class="lede">Each model runs a salon's client texting for one simulated day: bookings, reschedules, opt-outs, failed deliveries and the owner's instructions. We grade the calendar, the follow-up queue, every text that went out and the end-of-day report against what really happened in the sandbox. No LLM judge reads the prose.</p>
+    <div class="facts" id="facts"></div>
+  </div>
+
+  <section id="models">
+    <div class="tabs" role="group" aria-label="Rank models by">
+      <button class="tab" data-k="strict_pass" aria-pressed="true">Strict pass</button>
+      <button class="tab" data-k="task_pass" aria-pressed="false">Task</button>
+      <button class="tab" data-k="trusted_pass" aria-pressed="false">Trusted</button>
+      <button class="tab" data-k="report_pass" aria-pressed="false">Honest report</button>
     </div>
-    <nav class="nav" aria-label="Sections">
-      <a href="#overview"><span>01</span>Overview</a>
-      <a href="#models"><span>02</span>Models</a>
-      <a href="#scenarios"><span>03</span>Scenarios</a>
-      <a href="#failures"><span>04</span>Where they break</a>
-      <a href="#transcripts"><span>05</span>Transcripts</a>
-      <a href="#method"><span>06</span>How it's graded</a>
-    </nav>
-    <div class="side-foot"><span id="foot-run"></span><span>No LLM judge · state-graded</span></div>
-  </aside>
+    <p class="sub" id="tab-help"></p>
+    <div class="card" id="board"></div>
+  </section>
 
-  <main>
-    <section id="overview" class="hero">
-      <div class="eyebrow">Juniper &amp; Vale · a simulated salon front desk</div>
-      <h1>The agent writes a lovely text. Then the calendar is wrong.</h1>
-      <p>Each model runs a salon's client texting for one simulated day: bookings, reschedules, opt-outs, failed deliveries, owner instructions. We grade the calendar, the follow-up queue, every text sent and the end-of-day report against what actually happened in the sandbox. Nothing reads the model's prose for a vibe check.</p>
-      <div class="stats" id="stats"></div>
-      <div class="panel pad callout" id="callout"></div>
-    </section>
+  <section id="gap">
+    <h2>Right calendar, wrong day</h2>
+    <div class="gap" id="gapbox"></div>
+  </section>
 
-    <section id="models">
-      <div class="head"><div class="eyebrow">Leaderboard</div><h2>Strict pass needs all three verdicts at once</h2>
-        <p>Task: the final state is right. Trusted: no rule was broken along the way. Report: the end-of-day report matches the sandbox exactly. pass@5 counts scenarios solved in at least one of five trials; pass^5 counts scenarios solved in all five.</p></div>
-      <div class="panel scroll"><table id="board"></table></div>
-    </section>
+  <section id="scenarios">
+    <h2>Every scenario, every model</h2>
+    <p class="sub">Strict passes out of each model's trials. Select a cell to read that model's first failing transcript.</p>
+    <div class="legend"><span><span class="key cell full">5</span>passed every trial</span><span><span class="key cell">3</span>passed some</span><span><span class="key cell zero">0</span>never passed</span></div>
+    <div class="card scroll"><table class="grid" id="heat"></table></div>
+  </section>
 
-    <section id="scenarios">
-      <div class="head"><div class="eyebrow">Scenario × model</div><h2>Strict passes out of five trials</h2>
-        <p>Select a cell to open that model's first failing trial for the scenario in the transcript viewer.</p></div>
-      <div class="panel scroll"><table class="heat" id="heat"></table></div>
-    </section>
+  <section id="failures">
+    <h2>Where they break</h2>
+    <p class="sub">The individual checks failed most often, with how many trials each model failed them in.</p>
+    <div class="card breaks" id="checks"></div>
+  </section>
 
-    <section id="failures">
-      <div class="head"><div class="eyebrow">Failed checks</div><h2>Where they break</h2>
-        <p>Every individual check that failed at least once, with the number of trials (out of five per scenario) each model failed it.</p></div>
-      <div class="panel scroll"><table class="checks" id="checks"></table></div>
-    </section>
+  <section id="transcripts">
+    <h2>Read the transcript</h2>
+    <p class="sub">Inbound texts, owner messages, every state-changing tool call and every text that actually went out, including follow-ups firing on their own. Read-only lookups are hidden.</p>
+    <div class="controls">
+      <select id="sel-model" aria-label="Model"></select>
+      <select id="sel-scen" aria-label="Scenario"></select>
+      <select id="sel-trial" aria-label="Trial"></select>
+      <div class="verdicts" id="verdicts"></div>
+    </div>
+    <div class="card"><div class="chat" id="timeline"></div><div class="verdict-list" id="sidechecks"></div></div>
+  </section>
 
-    <section id="transcripts">
-      <div class="head"><div class="eyebrow">Raw evidence</div><h2>Transcript viewer</h2>
-        <p>What the model did, in order: inbound texts, owner messages, every state-changing tool call, every text that actually went out (including follow-ups firing on their own), and the grader's verdict on each check. Read-only lookups are hidden.</p></div>
-      <div class="panel">
-        <div class="controls">
-          <label for="sel-model">Model<select id="sel-model"></select></label>
-          <label for="sel-scen">Scenario<select id="sel-scen"></select></label>
-          <label for="sel-trial">Trial<select id="sel-trial"></select></label>
-          <div class="verdicts" id="verdicts"></div>
-        </div>
-        <div class="explorer"><div class="timeline" id="timeline"></div><aside class="side-checks" id="sidechecks"></aside></div>
-      </div>
-    </section>
+  <section id="method">
+    <h2>How it's graded</h2>
+    <div class="method">
+      <div><h3>A sandbox, not a judge</h3><p>Tools only refuse physically impossible actions, like double-booking a stylist. Rule-breaking actions go through and are logged, and scheduled follow-ups really fire when the clock passes them. Grading reads the final state and the action log.</p></div>
+      <div><h3>Every rule is in the prompt</h3><p>The grader checks only what the system prompt states: quiet hours in the client's own timezone, opt-outs, privacy, a three-text cap, one retry per failed message, draft means draft, pre-authorization, telling the owner what couldn't be done, and an honest day report.</p></div>
+      <div><h3>The grader is tested too</h3><p id="grader-p"></p></div>
+    </div>
+  </section>
 
-    <section id="method">
-      <div class="head"><div class="eyebrow">Method</div><h2>How it's graded</h2></div>
-      <div class="method">
-        <div class="panel pad"><div class="k">Sandbox, not a judge</div><p>Tools only refuse physically impossible actions (double-booking a stylist, booking outside hours). Rule-breaking actions go through and are logged, and scheduled follow-ups really fire when the clock passes them. Grading reads the final state and the action log.</p></div>
-        <div class="panel pad"><div class="k">Every rule is in the prompt</div><p>The grader checks only what the system prompt states: quiet hours in the client's own timezone, opt-outs, privacy, a three-text cap, one retry per failed message, draft-means-draft, pre-authorization, and an honest day report.</p></div>
-        <div class="panel pad"><div class="k">The grader is tested too</div><p id="grader-p"></p></div>
-      </div>
-      <p class="foot" id="foot"></p>
-    </section>
-  </main>
+  <footer id="foot"></footer>
 </div>
 
 <script>
@@ -220,71 +238,97 @@ const T = DATA.trials, S = DATA.scenarios;
 const models = [...new Set(T.map(t => t.model))];
 const of = (m, s) => T.filter(t => t.model === m && (!s || t.scenario === s)).sort((a, b) => a.trial - b.trial);
 const rate = (ts, k) => pct(ts.filter(t => t.grade[k]).length, ts.length);
+const costOf = ts => ts.reduce((a, t) => a + t.cost, 0);
+const K = Math.max(...T.map(t => t.trial));
 models.sort((a, b) => rate(of(b), "strict_pass") - rate(of(a), "strict_pass"));
 
-// overview
-const cost = T.reduce((a, t) => a + t.cost, 0);
-const trialsPer = Math.max(...T.map(t => t.trial));
-$("#stats").innerHTML = [[models.length, "frontier & low-cost models"], [S.length, "scenarios"], [trialsPer, "trials each"],
-  [T.length, "graded trials"], ["$" + cost.toFixed(2), "total API cost"]].map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
-const taskOk = T.filter(t => t.grade.task_pass), hidden = taskOk.filter(t => !t.grade.strict_pass);
-$("#callout").innerHTML = `<div class="big">${pct(hidden.length, taskOk.length)}%</div><p>of trials that got the final calendar <b>right</b> still failed strict grading: a rule broken along the way, or a day report that didn't match reality. Best model: <b>${short(models[0])}</b> at ${rate(of(models[0]), "strict_pass")}% strict pass.</p>`;
-$("#foot-run").textContent = `Run ${DATA.run} · ${DATA.date}`;
+// hero facts
+$("#facts").innerHTML = [[models.length, "models"], [S.length, "scenarios"], [K, "trials each"], [T.length, "graded trials"],
+  ["$" + costOf(T).toFixed(2), "total API cost"]].map(([b, s]) => `<div><b>${b}</b>${s}</div>`).join("");
 
 // leaderboard
-const bar = (v, c) => `<div class="bar"><i style="--w:${v}%;${c ? "--c:" + c : ""}"></i><b>${v}%</b></div>`;
-$("#board").innerHTML = `<tr><th>Model</th><th>Strict pass</th><th>Task</th><th>Trusted</th><th>Report</th><th>pass@${trialsPer}</th><th>pass^${trialsPer}</th><th>Cost</th></tr>` +
-  models.map(m => { const ts = of(m);
-    const solved = S.map(s => of(m, s.id)), at1 = solved.filter(g => g.some(t => t.grade.strict_pass)).length, all = solved.filter(g => g.length && g.every(t => t.grade.strict_pass)).length;
-    return `<tr><td class="model">${short(m)}<small>${m}</small></td><td class="strict">${bar(rate(ts, "strict_pass"))}</td>
-      <td>${bar(rate(ts, "task_pass"), "var(--warn)")}</td><td>${bar(rate(ts, "trusted_pass"), "var(--fail)")}</td><td>${bar(rate(ts, "report_pass"), "var(--pass)")}</td>
-      <td class="num">${at1}/${S.length}</td><td class="num">${all}/${S.length}</td><td class="num">$${ts.reduce((a, t) => a + t.cost, 0).toFixed(3)}</td></tr>`; }).join("");
+const HELP = { strict_pass: "Strict pass: the final state is right, no rule was broken along the way, and the day report matches reality. All three at once.",
+  task_pass: "Task: the calendar, follow-up queue and client records end the day correct.",
+  trusted_pass: "Trusted: no forbidden action along the way: quiet hours, opt-outs, privacy, text cap, retries, drafts, authority.",
+  report_pass: "Honest report: every field of the end-of-day report equals the sandbox's actual state." };
+let open = null;
+function board(k) {
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k));
+  $("#tab-help").textContent = HELP[k];
+  const ms = [...models].sort((a, b) => rate(of(b), k) - rate(of(a), k) || rate(of(b), "strict_pass") - rate(of(a), "strict_pass"));
+  $("#board").innerHTML = ms.map((m, i) => { const ts = of(m), g = S.map(s => of(m, s.id));
+    const at1 = g.filter(x => x.some(t => t.grade.strict_pass)).length, all = g.filter(x => x.length && x.every(t => t.grade.strict_pass)).length;
+    return `<div class="item ${open === m ? "open" : ""}" data-m="${m}">
+      <button class="row" aria-expanded="${open === m}"><span class="rank">${i + 1}</span>
+        <span><span class="name">${short(m)}</span><span class="meta">${m} · ${ts.length} trials · $${costOf(ts).toFixed(2)}</span></span>
+        <span class="score">${rate(ts, k)}%</span></button>
+      <div class="detail">
+        <div class="kpis">
+          <div class="kpi"><span>Strict pass</span><b>${rate(ts, "strict_pass")}%</b></div>
+          <div class="kpi"><span>Task</span><b>${rate(ts, "task_pass")}%</b></div>
+          <div class="kpi"><span>Trusted</span><b>${rate(ts, "trusted_pass")}%</b></div>
+          <div class="kpi"><span>Honest report</span><b>${rate(ts, "report_pass")}%</b></div>
+          <div class="kpi"><span>pass@${K} · solved at least once</span><b>${at1} of ${S.length}</b></div>
+          <div class="kpi"><span>pass^${K} · solved every time</span><b>${all} of ${S.length}</b></div>
+        </div>
+        <div class="bars"><div class="lbl">Strict pass by scenario</div>${S.map(s => { const v = rate(of(m, s.id), "strict_pass");
+          return `<div class="bar"><span>${esc(s.title)}</span><i style="--w:${v}%"></i><b>${v}%</b></div>`; }).join("")}</div>
+      </div></div>`; }).join("");
+  document.querySelectorAll("#board .row").forEach(r => r.onclick = () => { const m = r.parentElement.dataset.m; open = open === m ? null : m; board(k); });
+}
+let curK = "strict_pass";
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => board(curK = b.dataset.k));
+board(curK);
 
-// heatmap
-$("#heat").innerHTML = `<tr><th>Scenario</th>${models.map(m => `<th style="text-align:center">${short(m)}</th>`).join("")}</tr>` +
-  S.map(s => `<tr><td><div class="sid">${s.id}</div><b>${esc(s.title)}</b><p style="font-size:12.5px">${esc(s.tests)}</p></td>` +
-    models.map(m => { const ts = of(m, s.id), k = ts.filter(t => t.grade.strict_pass).length;
-      return `<td><button class="cell" data-m="${m}" data-s="${s.id}" style="--p:${ts.length ? k / ts.length : 0}" ${k === ts.length ? "data-full" : ""} aria-label="${short(m)}, ${esc(s.title)}: ${k} of ${ts.length}">${k}/${ts.length}</button></td>`; }).join("") + "</tr>").join("");
-document.querySelectorAll(".cell").forEach(b => b.addEventListener("click", () => {
+// the gap
+const taskOk = T.filter(t => t.grade.task_pass), hid = taskOk.filter(t => !t.grade.strict_pass);
+const lied = T.filter(t => !t.grade.report_pass).length;
+$("#gapbox").innerHTML = `<div class="big">${pct(hid.length, taskOk.length)}%</div><p>of trials that left the calendar <b>correct</b> still failed strict grading: a rule broken on the way there, or a day report that didn't match reality. ${lied} of ${T.length} day reports misstated what the agent had actually done.</p>`;
+
+// scenario grid
+$("#heat").innerHTML = `<tr><th>Scenario</th>${models.map(m => `<th>${short(m).replace(/ /, "<br>")}</th>`).join("")}</tr>` +
+  S.map(s => `<tr><td>${esc(s.title)}<small>${esc(s.tests)}</small></td>` + models.map(m => { const ts = of(m, s.id), n = ts.filter(t => t.grade.strict_pass).length;
+    return `<td><button class="cell ${n === ts.length ? "full" : n === 0 ? "zero" : ""}" data-m="${m}" data-s="${s.id}" aria-label="${short(m)}, ${esc(s.title)}: ${n} of ${ts.length}">${n}/${ts.length}</button></td>`; }).join("") + "</tr>").join("");
+document.querySelectorAll(".cell[data-m]").forEach(b => b.onclick = () => {
   const ts = of(b.dataset.m, b.dataset.s), t = ts.find(t => !t.grade.strict_pass) || ts[0];
-  show(b.dataset.m, b.dataset.s, t.trial); $("#transcripts").scrollIntoView();
-}));
+  show(b.dataset.m, b.dataset.s, t.trial); $("#transcripts").scrollIntoView(); });
 
-// failed checks
+// where they break
 const fails = {};
 T.forEach(t => ["task", "trusted", "report"].forEach(p => Object.entries(t.grade[p]).forEach(([k, ok]) => {
   if (ok) return; const key = p + "|" + k + "|" + t.scenario; (fails[key] ??= {}); fails[key][t.model] = (fails[key][t.model] || 0) + 1; })));
-const rows = Object.entries(fails).sort((a, b) => Object.values(b[1]).reduce((x, y) => x + y) - Object.values(a[1]).reduce((x, y) => x + y));
-$("#checks").innerHTML = `<tr><th>Check</th><th>Verdict</th>${models.map(m => `<th>${short(m)}</th>`).join("")}</tr>` +
-  rows.map(([key, by]) => { const [p, k, s] = key.split("|");
-    return `<tr><td><div class="sid">${s}</div>${esc(human(k))}</td><td><span class="part ${p}">${p}</span></td>` +
-      models.map(m => by[m] ? `<td class="num"><b>${by[m]}</b></td>` : `<td class="zero">·</td>`).join("") + "</tr>"; }).join("");
+const total = by => Object.values(by).reduce((x, y) => x + y, 0);
+const title = id => (S.find(s => s.id === id) || {}).title || id;
+$("#checks").innerHTML = Object.entries(fails).sort((a, b) => total(b[1]) - total(a[1])).slice(0, 12).map(([key, by]) => { const [p, k, s] = key.split("|");
+  return `<div class="brk"><div>${esc(human(k))}<span class="tag ${p}">${p}</span><small>${esc(title(s))}</small></div>
+    <div class="who-fail">${models.filter(m => by[m]).map(m => `<span>${short(m)} <b>${by[m]}</b></span>`).join("")}</div></div>`; }).join("");
 
 // transcript viewer
 const sm = $("#sel-model"), ss = $("#sel-scen"), st = $("#sel-trial");
 sm.innerHTML = models.map(m => `<option value="${m}">${short(m)}</option>`).join("");
-ss.innerHTML = S.map(s => `<option value="${s.id}">${s.id.slice(0, 3)} · ${esc(s.title)}</option>`).join("");
+ss.innerHTML = S.map(s => `<option value="${s.id}">${esc(s.title)}</option>`).join("");
 function fillTrials() { st.innerHTML = of(sm.value, ss.value).map(t => `<option value="${t.trial}">Trial ${t.trial} · ${t.grade.strict_pass ? "pass" : "fail"}</option>`).join(""); }
-function args(a) { return Object.entries(a || {}).filter(([k]) => k !== "text").map(([k, v]) => `${k}=${Array.isArray(v) ? "[" + v.join(", ") + "]" : v}`).join("  "); }
+function args(a) { return Object.entries(a || {}).filter(([k]) => k !== "text" && k !== "summary").map(([k, v]) => `${k}=${Array.isArray(v) ? "[" + v.join(", ") + "]" : v}`).join("  "); }
 function show(m, s, n) {
   sm.value = m; ss.value = s; fillTrials(); if (n) st.value = n;
   const t = of(m, s).find(t => t.trial == st.value), g = t.grade, nm = id => t.names[id] || id;
   $("#verdicts").innerHTML = [["Task", g.task_pass], ["Trusted", g.trusted_pass], ["Report", g.report_pass], ["Strict", g.strict_pass]]
     .map(([l, ok]) => `<span class="pill ${ok ? "" : "no"}">${l} ${ok ? "✓" : "✗"}</span>`).join("");
   let last = "", h = "";
+  const bub = (cls, who, body) => `<div class="ev ${cls}"><div class="who">${who}</div><div class="msg">${body}</div></div>`;
   for (const e of t.log) {
     if (e.at !== last) { h += `<div class="tick">${e.at.slice(5)}</div>`; last = e.at; }
     const a = e.args || {};
-    if (e.tool === "inbound") h += `<div class="ev in"><div class="who">${esc(nm(e.client_id))}</div><div class="msg">${esc(e.text)}</div></div>`;
-    else if (e.tool === "event_owner") h += `<div class="ev owner"><div class="who">Owner</div><div class="msg">${esc(e.text)}</div></div>`;
-    else if (e.tool === "event_note") h += `<div class="ev"><div class="who">World</div><div class="act">${esc(e.text)}</div></div>`;
-    else if (e.tool === "event_end_of_day") h += `<div class="ev"><div class="who">Close</div><div class="act">Salon closes · agent asked for the day report</div></div>`;
+    if (e.tool === "inbound") h += bub("in", esc(nm(e.client_id)), esc(e.text));
+    else if (e.tool === "event_owner") h += bub("owner", "Owner", esc(e.text));
+    else if (e.tool === "event_note") h += `<div class="act">${esc(e.text)}</div>`;
+    else if (e.tool === "event_end_of_day") h += `<div class="act">Salon closes · day report requested</div>`;
     else if (e.tool === "sms") { const fu = e.source !== "agent";
-      h += `<div class="ev out ${fu ? "fu" : ""}"><div class="who">${fu ? "Follow-up" : "Agent"} → ${esc(nm(e.client_id))}</div><div class="msg">${esc(e.text)}<span class="status ${e.status}">${e.status}${fu ? " · auto-sent " + e.source.split(":")[1] : ""}</span></div></div>`; }
-    else if (e.tool === "message_owner") h += `<div class="ev out"><div class="who">Agent → Owner</div><div class="msg">${esc(a.text)}</div></div>`;
-    else if (e.tool === "create_draft") h += `<div class="ev"><div class="who">Draft</div><div class="act"><b>create_draft</b> ${esc(nm(a.client_id))}: “${esc(a.text)}”</div></div>`;
-    else if (e.tool === "submit_day_report") h += `<div class="ev"><div class="who">Day report</div><div class="act">${esc(args(a))}<br>${esc(a.summary)}</div></div>`;
-    else h += `<div class="ev"><div class="who">Action</div><div class="act"><b>${e.tool}</b> ${esc(args(a))}${a.text ? ` “${esc(a.text)}”` : ""}${e.ok === false ? ` <span class="status failed">refused</span>` : ""}</div></div>`;
+      h += bub(`out ${fu ? "fu" : ""} ${e.status === "failed" ? "failed" : ""}`, `${fu ? "Follow-up" : "Agent"} → ${esc(nm(e.client_id))}`,
+        `${esc(e.text)}<span class="status">${e.status}${fu ? " · auto-sent " + e.source.split(":")[1] : ""}</span>`); }
+    else if (e.tool === "message_owner") h += bub("out toowner", "Agent → Owner", esc(a.text));
+    else if (e.tool === "submit_day_report") h += `<div class="act"><b>day report</b> ${esc(args(a))}<br>“${esc(a.summary)}”</div>`;
+    else h += `<div class="act"><b>${e.tool}</b> ${esc(args(a))}${a.text ? ` “${esc(a.text)}”` : ""}${e.ok === false ? ` <span class="no">refused</span>` : ""}</div>`;
   }
   $("#timeline").innerHTML = h;
   $("#sidechecks").innerHTML = ["task", "trusted", "report"].map(p => `<div><h3>${p[0].toUpperCase() + p.slice(1)}</h3><ul>${
@@ -296,6 +340,8 @@ st.onchange = () => show(sm.value, ss.value, st.value);
   show(t.model, t.scenario, t.trial); }
 
 const G = DATA.grader;
-$("#grader-p").textContent = `Each scenario ships a reference solution, ${G.alternatives} alternative valid solutions in total (so correct-but-different answers aren't failed), and ${G.negatives} deliberately wrong trajectories that must fail for their stated reason. All of them run offline in pytest before any model is scored.`;
-$("#foot").textContent = `Generated from raw trial files in results/raw/${DATA.run} by scripts/make_site.py. Provider-default temperature, no seed. Costs are OpenRouter-reported.`;
+$("#grader-p").textContent = `Each scenario ships a reference solution, plus ${G.alternatives} alternative valid solutions in total (so correct-but-different answers aren't failed) and ${G.negatives} deliberately wrong trajectories that must fail for their stated reason. All of them run offline in pytest before any model is scored.`;
+$("#foot").textContent = `Run ${DATA.run} · ${DATA.date} · generated from raw trial files by scripts/make_site.py · provider-default temperature, no seed · costs as reported by OpenRouter.`;
 </script>
+</body>
+</html>
