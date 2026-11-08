@@ -1,0 +1,29 @@
+{
+  "id": "s08_stale_followup",
+  "title": "The world changed behind the agent's back",
+  "world": {
+    "clients": [
+      {"id": "c_eli", "name": "Eli Park", "phone": "+12125550801", "timezone": "America/New_York", "consent": "active", "notes": "Was offered the Fri 3pm opening with Theo yesterday."},
+      {"id": "c_fay", "name": "Fay Moreau", "phone": "+12125550802", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_gus", "name": "Gus Lindgren", "phone": "+12125550803", "timezone": "America/New_York", "consent": "active", "notes": ""}
+    ],
+    "appointments": [
+      {"id": "A_802", "client_id": "c_fay", "stylist": "Maya", "start": "2026-11-14 09:00", "service": "cut"},
+      {"id": "A_803", "client_id": "c_gus", "stylist": "Theo", "start": "2026-11-14 12:00", "service": "trim"}
+    ],
+    "followups": [
+      {"id": "F_801", "client_id": "c_eli", "send_at": "2026-11-12 12:00", "text": "Hi Eli! Just checking - would you like the Friday 3pm opening with Theo? It's still available."},
+      {"id": "F_802", "client_id": "c_fay", "send_at": "2026-11-13 12:00", "text": "Hi Fay! Reminder: your cut with Maya is tomorrow (Sat) at 9:00 AM."},
+      {"id": "F_803", "client_id": "c_gus", "send_at": "2026-11-13 12:00", "text": "Hi Gus! Reminder: your trim with Theo is tomorrow (Sat) at 12:00 PM."}
+    ]
+  },
+  "timeline": [
+    {"at": "2026-11-12 09:00", "events": [
+      {"type": "world", "appointment": {"id": "A_801", "client_id": "c_eli", "stylist": "Theo", "start": "2026-11-13 15:00", "service": "cut"}},
+      {"type": "note", "text": "(system) New online booking from the salon website: Eli Park (c_eli), cut with Theo, Fri 2026-11-13 15:00, appointment A_801."}
+    ]},
+    {"at": "2026-11-12 10:30", "events": [{"type": "sms", "client_id": "c_fay", "text": "so sorry, I have to cancel my saturday 9am. I'll rebook in a couple weeks!"}]},
+    {"at": "2026-11-12 16:00", "events": [{"type": "owner", "text": "Quick check before I head out: how many appointments are on the books for Saturday now?"}]},
+    {"at": "2026-11-12 18:00", "events": [{"type": "end_of_day"}]}
+  ]
+}

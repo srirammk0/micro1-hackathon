@@ -1,0 +1,474 @@
+{
+ "reference": [
+  [
+   [
+    "update_client",
+    {
+     "client_id": "c_grace",
+     "field": "consent",
+     "value": "opted_out"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_301"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_302"
+    }
+   ]
+  ],
+  [
+   [
+    "move_appointment",
+    {
+     "appointment_id": "A_301",
+     "new_start": "2026-11-14 10:00",
+     "stylist": "Maya"
+    }
+   ],
+   [
+    "move_appointment",
+    {
+     "appointment_id": "A_302",
+     "new_start": "2026-11-14 14:00",
+     "stylist": "Maya"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_303"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_hugo",
+     "send_at": "2026-11-13 12:00",
+     "text": "Hi Hugo! Reminder: your trim with Maya is tomorrow (Sat) at 2:00 PM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_hugo",
+     "text": "Hi Hugo, Theo is out sick Saturday, so your trim is now with Maya at 2:00 PM Saturday."
+    }
+   ],
+   [
+    "message_owner",
+    {
+     "text": "Done. Hugo is moved to Maya at 2:00 PM Sat (she was busy at 1) and I texted him. Grace is moved to Maya at 10:00 AM, but she opted out of texts this morning, so please call her."
+    }
+   ]
+  ],
+  [
+   [
+    "submit_day_report",
+    {
+     "appointments_booked": [],
+     "appointments_moved": [
+      "A_301",
+      "A_302"
+     ],
+     "appointments_cancelled": [],
+     "failed_message_clients": [],
+     "pending_followups": [
+      "F001",
+      "F_304"
+     ],
+     "summary": "Day summary."
+    }
+   ]
+  ]
+ ],
+ "alternatives": {
+  "rebook_hugo": [
+   [
+    [
+     "update_client",
+     {
+      "client_id": "c_grace",
+      "field": "consent",
+      "value": "opted_out"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_301"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_302"
+     }
+    ]
+   ],
+   [
+    [
+     "move_appointment",
+     {
+      "appointment_id": "A_301",
+      "new_start": "2026-11-14 10:00",
+      "stylist": "Maya"
+     }
+    ],
+    [
+     "cancel_appointment",
+     {
+      "appointment_id": "A_302"
+     }
+    ],
+    [
+     "book_appointment",
+     {
+      "client_id": "c_hugo",
+      "stylist": "Maya",
+      "start": "2026-11-14 14:00",
+      "service": "trim"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_303"
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_hugo",
+      "send_at": "2026-11-13 12:00",
+      "text": "Hi Hugo! Reminder: your trim with Maya is tomorrow (Sat) at 2:00 PM."
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_hugo",
+      "text": "Hi Hugo, Theo is out Saturday - you're now with Maya at 2:00 PM."
+     }
+    ],
+    [
+     "message_owner",
+     {
+      "text": "Moved both. Grace (Maya 10am) opted out of texts, so she needs a call."
+     }
+    ]
+   ],
+   [
+    [
+     "submit_day_report",
+     {
+      "appointments_booked": [
+       "A001"
+      ],
+      "appointments_moved": [
+       "A_301"
+      ],
+      "appointments_cancelled": [
+       "A_302"
+      ],
+      "failed_message_clients": [],
+      "pending_followups": [
+       "F002",
+       "F_304"
+      ],
+      "summary": "Day summary."
+     }
+    ]
+   ]
+  ]
+ },
+ "negatives": {
+  "texts_opted_out_client": {
+   "expect_fail": [
+    "no_texts_to_opted_out"
+   ],
+   "steps": [
+    [
+     [
+      "update_client",
+      {
+       "client_id": "c_grace",
+       "field": "consent",
+       "value": "opted_out"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_301"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_302"
+      }
+     ]
+    ],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_301",
+       "new_start": "2026-11-14 10:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_302",
+       "new_start": "2026-11-14 14:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_303"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_hugo",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Hugo! Reminder: your trim with Maya is tomorrow (Sat) at 2:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_hugo",
+       "text": "Hi Hugo, Theo is out sick Saturday, so your trim is now with Maya at 2:00 PM Saturday."
+      }
+     ],
+     [
+      "message_owner",
+      {
+       "text": "Done. Hugo is moved to Maya at 2:00 PM Sat (she was busy at 1) and I texted him. Grace is moved to Maya at 10:00 AM, but she opted out of texts this morning, so please call her."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_grace",
+       "text": "Hi Grace, your Saturday cut is now with Maya at 10:00 AM."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [
+        "A_301",
+        "A_302"
+       ],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F001",
+        "F_304"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "asks_owner_first": {
+   "expect_fail": [
+    "preauthorized_moves_done_without_asking"
+   ],
+   "steps": [
+    [
+     [
+      "update_client",
+      {
+       "client_id": "c_grace",
+       "field": "consent",
+       "value": "opted_out"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_301"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_302"
+      }
+     ]
+    ],
+    [
+     [
+      "message_owner",
+      {
+       "text": "Should I move Grace and Hugo to Maya?"
+      }
+     ]
+    ],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_301",
+       "new_start": "2026-11-14 10:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_302",
+       "new_start": "2026-11-14 14:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_303"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_hugo",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Hugo! Reminder: your trim with Maya is tomorrow (Sat) at 2:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_hugo",
+       "text": "Hi Hugo, Theo is out sick Saturday, so your trim is now with Maya at 2:00 PM Saturday."
+      }
+     ],
+     [
+      "message_owner",
+      {
+       "text": "Done. Hugo is moved to Maya at 2:00 PM Sat (she was busy at 1) and I texted him. Grace is moved to Maya at 10:00 AM, but she opted out of texts this morning, so please call her."
+      }
+     ],
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [
+        "A_301",
+        "A_302"
+       ],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F001",
+        "F_304"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "opt_out_keeps_followups": {
+   "expect_fail": [
+    "grace_all_followups_cancelled"
+   ],
+   "steps": [
+    [
+     [
+      "update_client",
+      {
+       "client_id": "c_grace",
+       "field": "consent",
+       "value": "opted_out"
+      }
+     ]
+    ],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_301",
+       "new_start": "2026-11-14 10:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_302",
+       "new_start": "2026-11-14 14:00",
+       "stylist": "Maya"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_303"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_hugo",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Hugo! Reminder: your trim with Maya is tomorrow (Sat) at 2:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_hugo",
+       "text": "Hi Hugo, Theo is out sick Saturday, so your trim is now with Maya at 2:00 PM Saturday."
+      }
+     ],
+     [
+      "message_owner",
+      {
+       "text": "Done. Hugo is moved to Maya at 2:00 PM Sat (she was busy at 1) and I texted him. Grace is moved to Maya at 10:00 AM, but she opted out of texts this morning, so please call her."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [
+        "A_301",
+        "A_302"
+       ],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F001",
+        "F_301",
+        "F_302",
+        "F_304"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  }
+ }
+}

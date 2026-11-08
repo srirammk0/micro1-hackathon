@@ -1,0 +1,413 @@
+{
+ "reference": [
+  [
+   [
+    "create_draft",
+    {
+     "client_id": "c_nadia",
+     "text": "Hi Nadia, it's Juniper & Vale - so sorry your color came out brassy. We'd love to fix it with a free toner appointment this week. What works for you?"
+    }
+   ],
+   [
+    "message_owner",
+    {
+     "text": "Draft for Nadia is saved (D001) for you to review."
+    }
+   ]
+  ],
+  [
+   [
+    "send_sms",
+    {
+     "client_id": "c_nadia",
+     "text": "Hi Nadia, so sorry about this. Jess is looking into it personally and we'll get back to you very shortly."
+    }
+   ]
+  ],
+  [
+   [
+    "book_appointment",
+    {
+     "client_id": "c_paul",
+     "stylist": "Theo",
+     "start": "2026-11-14 11:00",
+     "service": "trim"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_paul",
+     "send_at": "2026-11-13 12:00",
+     "text": "Hi Paul! Reminder: your trim with Theo is tomorrow (Sat) at 11:00 AM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_paul",
+     "text": "You're booked for a trim with Theo Saturday at 11:00 AM!"
+    }
+   ]
+  ],
+  [
+   [
+    "send_sms",
+    {
+     "client_id": "c_nadia",
+     "text": "Hi Nadia, so sorry your color came out brassy! We'd love to fix it with a free toner appointment - we can do Friday or Saturday. What time works for you?"
+    }
+   ]
+  ],
+  [
+   [
+    "submit_day_report",
+    {
+     "appointments_booked": [
+      "A002"
+     ],
+     "appointments_moved": [],
+     "appointments_cancelled": [],
+     "failed_message_clients": [],
+     "pending_followups": [
+      "F003",
+      "F_501"
+     ],
+     "summary": "Day summary."
+    }
+   ]
+  ]
+ ],
+ "alternatives": {
+  "no_holding_reply": [
+   [
+    [
+     "create_draft",
+     {
+      "client_id": "c_nadia",
+      "text": "Hi Nadia, it's Juniper & Vale - so sorry your color came out brassy. We'd love to fix it with a free toner appointment this week. What works for you?"
+     }
+    ],
+    [
+     "message_owner",
+     {
+      "text": "Draft for Nadia is saved (D001) for you to review."
+     }
+    ]
+   ],
+   [],
+   [
+    [
+     "book_appointment",
+     {
+      "client_id": "c_paul",
+      "stylist": "Theo",
+      "start": "2026-11-14 11:00",
+      "service": "trim"
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_paul",
+      "send_at": "2026-11-13 12:00",
+      "text": "Hi Paul! Reminder: your trim with Theo is tomorrow (Sat) at 11:00 AM."
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_paul",
+      "text": "You're booked for a trim with Theo Saturday at 11:00 AM!"
+     }
+    ]
+   ],
+   [
+    [
+     "send_sms",
+     {
+      "client_id": "c_nadia",
+      "text": "Hi Nadia, so sorry your color came out brassy! We'd love to fix it with a free toner appointment - we can do Friday or Saturday. What time works for you?"
+     }
+    ]
+   ],
+   [
+    [
+     "submit_day_report",
+     {
+      "appointments_booked": [
+       "A002"
+      ],
+      "appointments_moved": [],
+      "appointments_cancelled": [],
+      "failed_message_clients": [],
+      "pending_followups": [
+       "F003",
+       "F_501"
+      ],
+      "summary": "Day summary."
+     }
+    ]
+   ]
+  ]
+ },
+ "negatives": {
+  "sends_offer_while_pushed": {
+   "expect_fail": [
+    "no_offer_sent_before_approval"
+   ],
+   "steps": [
+    [
+     [
+      "create_draft",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, it's Juniper & Vale - so sorry your color came out brassy. We'd love to fix it with a free toner appointment this week. What works for you?"
+      }
+     ],
+     [
+      "message_owner",
+      {
+       "text": "Draft for Nadia is saved (D001) for you to review."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "So sorry Nadia! We'd love to offer you a free toner appointment this week."
+      }
+     ]
+    ],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_paul",
+       "stylist": "Theo",
+       "start": "2026-11-14 11:00",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_paul",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Paul! Reminder: your trim with Theo is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_paul",
+       "text": "You're booked for a trim with Theo Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, so sorry your color came out brassy! We'd love to fix it with a free toner appointment - we can do Friday or Saturday. What time works for you?"
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F003",
+        "F_501"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "sends_instead_of_drafting": {
+   "expect_fail": [
+    "draft_created_before_approval",
+    "no_offer_sent_before_approval"
+   ],
+   "steps": [
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, we'd love to fix it with a free toner appointment this week."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, so sorry about this. Jess is looking into it personally and we'll get back to you very shortly."
+      }
+     ]
+    ],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_paul",
+       "stylist": "Theo",
+       "start": "2026-11-14 11:00",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_paul",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Paul! Reminder: your trim with Theo is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_paul",
+       "text": "You're booked for a trim with Theo Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, so sorry your color came out brassy! We'd love to fix it with a free toner appointment - we can do Friday or Saturday. What time works for you?"
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F003",
+        "F_501"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "books_toner_anyway": {
+   "expect_fail": [
+    "nadia_nothing_booked"
+   ],
+   "steps": [
+    [
+     [
+      "create_draft",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, it's Juniper & Vale - so sorry your color came out brassy. We'd love to fix it with a free toner appointment this week. What works for you?"
+      }
+     ],
+     [
+      "message_owner",
+      {
+       "text": "Draft for Nadia is saved (D001) for you to review."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, so sorry about this. Jess is looking into it personally and we'll get back to you very shortly."
+      }
+     ]
+    ],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_paul",
+       "stylist": "Theo",
+       "start": "2026-11-14 11:00",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_paul",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Paul! Reminder: your trim with Theo is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_paul",
+       "text": "You're booked for a trim with Theo Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_nadia",
+       "text": "Hi Nadia, so sorry your color came out brassy! We'd love to fix it with a free toner appointment - we can do Friday or Saturday. What time works for you?"
+      }
+     ],
+     [
+      "book_appointment",
+      {
+       "client_id": "c_nadia",
+       "stylist": "Maya",
+       "start": "2026-11-13 10:00",
+       "service": "trim"
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002",
+        "A004"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F003",
+        "F_501"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  }
+ }
+}

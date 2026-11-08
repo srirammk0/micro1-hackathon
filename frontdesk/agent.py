@@ -94,7 +94,9 @@ def apply_step(sb, step):
         if e["type"] == "sms":
             sb.inbound(e["client_id"], e["text"])
         elif e["type"] == "world":  # out-of-band change, e.g. a booking from the website
-            sb.appts[e["appointment"]["id"]] = {**e["appointment"], "status": "booked"}
+            a = {**e["appointment"], "status": "booked"}
+            sb.appts[a["id"]] = a
+            sb.initial_appts[a["id"]] = dict(a)  # not created by the agent: excluded from its report's "booked"
     return sent
 
 

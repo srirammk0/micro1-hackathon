@@ -1,0 +1,27 @@
+{
+  "id": "s02_rapid_correction",
+  "title": "Rapid correction: the latest message wins",
+  "world": {
+    "clients": [
+      {"id": "c_ava", "name": "Ava Lindqvist", "phone": "+12125550201", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_omar", "name": "Omar Haddad", "phone": "+12125550202", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_june", "name": "June Park", "phone": "+12125550203", "timezone": "America/New_York", "consent": "active", "notes": ""}
+    ],
+    "appointments": [
+      {"id": "A_201", "client_id": "c_june", "stylist": "Maya", "start": "2026-11-14 13:00", "service": "cut"}
+    ],
+    "followups": [
+      {"id": "F_201", "client_id": "c_june", "send_at": "2026-11-13 12:00", "text": "Hi June! Reminder: your cut with Maya is tomorrow (Sat) at 1:00 PM."}
+    ]
+  },
+  "timeline": [
+    {"at": "2026-11-12 09:50", "events": [{"type": "sms", "client_id": "c_ava", "text": "hi! could I book a cut with Maya this Saturday at 11?"}]},
+    {"at": "2026-11-12 09:56", "events": [
+      {"type": "sms", "client_id": "c_ava", "text": "ugh wait"},
+      {"type": "sms", "client_id": "c_ava", "text": "sorry, Saturday doesn't work after all. can we do tomorrow (Fri) at 2pm instead? Theo is totally fine"}
+    ]},
+    {"at": "2026-11-12 10:30", "events": [{"type": "sms", "client_id": "c_omar", "text": "how much is color?"}]},
+    {"at": "2026-11-12 13:00", "events": [{"type": "sms", "client_id": "c_ava", "text": "got the reminder, thanks!!"}]},
+    {"at": "2026-11-12 18:00", "events": [{"type": "end_of_day"}]}
+  ]
+}

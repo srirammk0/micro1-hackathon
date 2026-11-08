@@ -45,6 +45,15 @@ def pending_followups(sb, client_id):
     return [f for f in sb.followups.values() if f["client_id"] == client_id and f["status"] == "pending"]
 
 
+def live_followups(sb, client_id):
+    """Follow-ups for a client that were not cancelled (pending, or already sent today)."""
+    return [f for f in sb.followups.values() if f["client_id"] == client_id and f["status"] != "cancelled"]
+
+
+def owner_msgs_since(sb, at):
+    return [m for m in sb.owner_inbox if sb.t(m["at"]) >= sb.t(at)]
+
+
 def has(text, *words):
     t = text.lower()
     return any(w.lower() in t for w in words)

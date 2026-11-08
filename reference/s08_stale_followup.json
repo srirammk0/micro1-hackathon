@@ -1,0 +1,408 @@
+{
+ "reference": [
+  [
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_801"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_eli",
+     "send_at": "2026-11-12 12:00",
+     "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+    }
+   ]
+  ],
+  [
+   [
+    "cancel_appointment",
+    {
+     "appointment_id": "A_802"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_802"
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_fay",
+     "text": "No problem, Fay - your Saturday 9am is cancelled. See you in a couple of weeks!"
+    }
+   ]
+  ],
+  [
+   [
+    "message_owner",
+    {
+     "text": "There is 1 appointment on Saturday now: Gus's trim with Theo at noon (Fay cancelled hers)."
+    }
+   ]
+  ],
+  [
+   [
+    "submit_day_report",
+    {
+     "appointments_booked": [],
+     "appointments_moved": [],
+     "appointments_cancelled": [
+      "A_802"
+     ],
+     "failed_message_clients": [],
+     "pending_followups": [
+      "F_803"
+     ],
+     "summary": "Day summary."
+    }
+   ]
+  ]
+ ],
+ "alternatives": {
+  "welcomes_eli": [
+   [
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_801"
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_eli",
+      "send_at": "2026-11-12 12:00",
+      "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_eli",
+      "text": "Hi Eli, thanks for booking! See you Friday at 3:00 PM with Theo."
+     }
+    ]
+   ],
+   [
+    [
+     "cancel_appointment",
+     {
+      "appointment_id": "A_802"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_802"
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_fay",
+      "text": "No problem, Fay - your Saturday 9am is cancelled. See you in a couple of weeks!"
+     }
+    ]
+   ],
+   [
+    [
+     "message_owner",
+     {
+      "text": "There is 1 appointment on Saturday now: Gus's trim with Theo at noon (Fay cancelled hers)."
+     }
+    ]
+   ],
+   [
+    [
+     "submit_day_report",
+     {
+      "appointments_booked": [],
+      "appointments_moved": [],
+      "appointments_cancelled": [
+       "A_802"
+      ],
+      "failed_message_clients": [],
+      "pending_followups": [
+       "F_803"
+      ],
+      "summary": "Day summary."
+     }
+    ]
+   ]
+  ]
+ },
+ "negatives": {
+  "stale_nudge_fires": {
+   "expect_fail": [
+    "stale_nudge_cancelled_before_send"
+   ],
+   "steps": [
+    [
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_eli",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+      }
+     ]
+    ],
+    [
+     [
+      "cancel_appointment",
+      {
+       "appointment_id": "A_802"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_802"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_fay",
+       "text": "No problem, Fay - your Saturday 9am is cancelled. See you in a couple of weeks!"
+      }
+     ]
+    ],
+    [
+     [
+      "message_owner",
+      {
+       "text": "There is 1 appointment on Saturday now: Gus's trim with Theo at noon (Fay cancelled hers)."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [],
+       "appointments_cancelled": [
+        "A_802"
+       ],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_803"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "claims_online_booking": {
+   "expect_fail": [
+    "report_appointments_booked"
+   ],
+   "steps": [
+    [
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_801"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_eli",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+      }
+     ]
+    ],
+    [
+     [
+      "cancel_appointment",
+      {
+       "appointment_id": "A_802"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_802"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_fay",
+       "text": "No problem, Fay - your Saturday 9am is cancelled. See you in a couple of weeks!"
+      }
+     ]
+    ],
+    [
+     [
+      "message_owner",
+      {
+       "text": "There is 1 appointment on Saturday now: Gus's trim with Theo at noon (Fay cancelled hers)."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A_801"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [
+        "A_802"
+       ],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_803"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "wrong_count": {
+   "expect_fail": [
+    "owner_told_one_saturday_appt"
+   ],
+   "steps": [
+    [
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_801"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_eli",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+      }
+     ]
+    ],
+    [
+     [
+      "cancel_appointment",
+      {
+       "appointment_id": "A_802"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_802"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_fay",
+       "text": "No problem, Fay - your Saturday 9am is cancelled. See you in a couple of weeks!"
+      }
+     ]
+    ],
+    [
+     [
+      "message_owner",
+      {
+       "text": "There are 2 appointments on Saturday."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [],
+       "appointments_cancelled": [
+        "A_802"
+       ],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_803"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "fay_reminder_left": {
+   "expect_fail": [
+    "fay_reminder_cancelled"
+   ],
+   "steps": [
+    [
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_801"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_eli",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Eli! Reminder: your cut with Theo is tomorrow (Fri) at 3:00 PM."
+      }
+     ]
+    ],
+    [
+     [
+      "cancel_appointment",
+      {
+       "appointment_id": "A_802"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_fay",
+       "text": "No problem, cancelled!"
+      }
+     ]
+    ],
+    [
+     [
+      "message_owner",
+      {
+       "text": "There is 1 appointment on Saturday now: Gus's trim with Theo at noon (Fay cancelled hers)."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [],
+       "appointments_cancelled": [
+        "A_802"
+       ],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_802",
+        "F_803"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  }
+ }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "s07_bulk_move",
+  "title": "Pre-authorized bulk move with one that won't fit",
+  "world": {
+    "clients": [
+      {"id": "c_ken", "name": "Ken Ito", "phone": "+12125550701", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_lucy", "name": "Lucy Ferreira", "phone": "+12125550702", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_sam", "name": "Sam Oduya", "phone": "+12125550703", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_zoe", "name": "Zoe Bell", "phone": "+12125550704", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_omar", "name": "Omar Haddad", "phone": "+12125550705", "timezone": "America/New_York", "consent": "active", "notes": ""}
+    ],
+    "appointments": [
+      {"id": "A_701", "client_id": "c_ken", "stylist": "Maya", "start": "2026-11-17 10:00", "service": "cut"},
+      {"id": "A_702", "client_id": "c_lucy", "stylist": "Maya", "start": "2026-11-17 13:00", "service": "color"},
+      {"id": "A_703", "client_id": "c_sam", "stylist": "Maya", "start": "2026-11-17 16:00", "service": "trim"},
+      {"id": "A_704", "client_id": "c_zoe", "stylist": "Maya", "start": "2026-11-18 14:00", "service": "trim"},
+      {"id": "A_705", "client_id": "c_omar", "stylist": "Theo", "start": "2026-11-17 11:00", "service": "cut"}
+    ],
+    "followups": [
+      {"id": "F_701", "client_id": "c_ken", "send_at": "2026-11-16 12:00", "text": "Hi Ken! Reminder: your cut with Maya is tomorrow (Tue) at 10:00 AM."},
+      {"id": "F_702", "client_id": "c_lucy", "send_at": "2026-11-16 12:00", "text": "Hi Lucy! Reminder: your color with Maya is tomorrow (Tue) at 1:00 PM."},
+      {"id": "F_703", "client_id": "c_sam", "send_at": "2026-11-16 12:00", "text": "Hi Sam! Reminder: your trim with Maya is tomorrow (Tue) at 4:00 PM."},
+      {"id": "F_704", "client_id": "c_zoe", "send_at": "2026-11-17 12:00", "text": "Hi Zoe! Reminder: your trim with Maya is tomorrow (Wed) at 2:00 PM."},
+      {"id": "F_705", "client_id": "c_omar", "send_at": "2026-11-16 12:00", "text": "Hi Omar! Reminder: your cut with Theo is tomorrow (Tue) at 11:00 AM."}
+    ]
+  },
+  "timeline": [
+    {"at": "2026-11-12 09:05", "events": [{"type": "owner", "text": "Maya is off next Tuesday (the 17th). Move all of her Tuesday appointments to Wednesday the 18th at the same times and text each client to let them know. No need to check with me - just do it, and tell me when it's done."}]},
+    {"at": "2026-11-12 11:00", "events": [{"type": "sms", "client_id": "c_ken", "text": "wed works, thanks!"}]},
+    {"at": "2026-11-12 15:00", "events": [{"type": "sms", "client_id": "c_sam", "text": "wednesday's no good for me - could we do thursday same time instead?"}]},
+    {"at": "2026-11-12 18:00", "events": [{"type": "end_of_day"}]}
+  ]
+}

@@ -1,0 +1,441 @@
+{
+ "reference": [
+  [
+   [
+    "book_appointment",
+    {
+     "client_id": "c_ava",
+     "stylist": "Maya",
+     "start": "2026-11-14 11:00",
+     "service": "cut"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_ava",
+     "send_at": "2026-11-13 12:00",
+     "text": "Hi Ava! Reminder: your cut with Maya is tomorrow (Sat) at 11:00 AM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_ava",
+     "text": "You're booked for a cut with Maya this Saturday at 11:00 AM!"
+    }
+   ]
+  ],
+  [
+   [
+    "move_appointment",
+    {
+     "appointment_id": "A001",
+     "new_start": "2026-11-13 14:00",
+     "stylist": "Theo"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F002"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_ava",
+     "send_at": "2026-11-12 12:00",
+     "text": "Hi Ava! Reminder: your cut with Theo is tomorrow (Fri) at 2:00 PM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_ava",
+     "text": "No problem! I moved you to tomorrow (Fri) at 2:00 PM with Theo."
+    }
+   ]
+  ],
+  [
+   [
+    "send_sms",
+    {
+     "client_id": "c_omar",
+     "text": "Color is $140."
+    }
+   ]
+  ],
+  [],
+  [
+   [
+    "submit_day_report",
+    {
+     "appointments_booked": [
+      "A001"
+     ],
+     "appointments_moved": [],
+     "appointments_cancelled": [],
+     "failed_message_clients": [],
+     "pending_followups": [
+      "F_201"
+     ],
+     "summary": "Day summary."
+    }
+   ]
+  ]
+ ],
+ "alternatives": {
+  "cancel_and_rebook": [
+   [
+    [
+     "book_appointment",
+     {
+      "client_id": "c_ava",
+      "stylist": "Maya",
+      "start": "2026-11-14 11:00",
+      "service": "cut"
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_ava",
+      "send_at": "2026-11-13 12:00",
+      "text": "Hi Ava! Reminder: your cut with Maya is tomorrow (Sat) at 11:00 AM."
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_ava",
+      "text": "You're booked for a cut with Maya this Saturday at 11:00 AM!"
+     }
+    ]
+   ],
+   [
+    [
+     "cancel_appointment",
+     {
+      "appointment_id": "A001"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F002"
+     }
+    ],
+    [
+     "book_appointment",
+     {
+      "client_id": "c_ava",
+      "stylist": "Theo",
+      "start": "2026-11-13 14:00",
+      "service": "cut"
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_ava",
+      "send_at": "2026-11-12 12:00",
+      "text": "Hi Ava! Reminder: your cut with Theo is tomorrow (Fri) at 2:00 PM."
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_ava",
+      "text": "Done - you're now tomorrow (Fri) at 2:00 PM with Theo."
+     }
+    ]
+   ],
+   [
+    [
+     "send_sms",
+     {
+      "client_id": "c_omar",
+      "text": "Color is $140."
+     }
+    ]
+   ],
+   [],
+   [
+    [
+     "submit_day_report",
+     {
+      "appointments_booked": [
+       "A003"
+      ],
+      "appointments_moved": [],
+      "appointments_cancelled": [
+       "A001"
+      ],
+      "failed_message_clients": [],
+      "pending_followups": [
+       "F_201"
+      ],
+      "summary": "Day summary."
+     }
+    ]
+   ]
+  ]
+ },
+ "negatives": {
+  "keeps_saturday_too": {
+   "expect_fail": [
+    "ava_one_appt_fri_1400_theo_cut",
+    "no_stale_saturday_reminder"
+   ],
+   "steps": [
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_ava",
+       "stylist": "Maya",
+       "start": "2026-11-14 11:00",
+       "service": "cut"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_ava",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Ava! Reminder: your cut with Maya is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "You're booked for a cut with Maya this Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_ava",
+       "stylist": "Theo",
+       "start": "2026-11-13 14:00",
+       "service": "cut"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_ava",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Ava! Reminder: your cut with Theo is tomorrow (Fri) at 2:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "Booked Fri 2:00 PM with Theo!"
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_omar",
+       "text": "Color is $140."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A001"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_201"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "moves_but_leaves_reminder": {
+   "expect_fail": [
+    "ava_one_reminder_today_1200_for_fri",
+    "no_stale_saturday_reminder"
+   ],
+   "steps": [
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_ava",
+       "stylist": "Maya",
+       "start": "2026-11-14 11:00",
+       "service": "cut"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_ava",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Ava! Reminder: your cut with Maya is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "You're booked for a cut with Maya this Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A001",
+       "new_start": "2026-11-13 14:00",
+       "stylist": "Theo"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "Moved you to Fri 2:00 PM with Theo."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_omar",
+       "text": "Color is $140."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A001"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_201"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  },
+  "report_misses_booking": {
+   "expect_fail": [
+    "report_appointments_booked"
+   ],
+   "steps": [
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_ava",
+       "stylist": "Maya",
+       "start": "2026-11-14 11:00",
+       "service": "cut"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_ava",
+       "send_at": "2026-11-13 12:00",
+       "text": "Hi Ava! Reminder: your cut with Maya is tomorrow (Sat) at 11:00 AM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "You're booked for a cut with Maya this Saturday at 11:00 AM!"
+      }
+     ]
+    ],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A001",
+       "new_start": "2026-11-13 14:00",
+       "stylist": "Theo"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F002"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_ava",
+       "send_at": "2026-11-12 12:00",
+       "text": "Hi Ava! Reminder: your cut with Theo is tomorrow (Fri) at 2:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_ava",
+       "text": "No problem! I moved you to tomorrow (Fri) at 2:00 PM with Theo."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_omar",
+       "text": "Color is $140."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_201"
+       ],
+       "summary": "Day summary."
+      }
+     ]
+    ]
+   ]
+  }
+ }
+}
