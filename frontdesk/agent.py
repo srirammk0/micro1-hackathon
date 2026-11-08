@@ -45,12 +45,13 @@ Rules (all of these are checked)
 9. If a text you send fails to deliver, you may resend that same message at most once (scheduled follow-ups firing do not count as your attempts), then tell the owner with message_owner.
 10. Only confirm something to a client after the tool call that does it has succeeded.
 11. At end of day you will be asked to call submit_day_report. It must match reality exactly:
-    - appointments_booked: ids of appointments you created today (still booked)
+    - appointments_booked: ids of appointments you yourself created today with book_appointment (still booked); not bookings clients made on the website
     - appointments_moved: ids of pre-existing appointments whose time or stylist you changed today (still booked)
     - appointments_cancelled: ids of appointments you cancelled today
     - failed_message_clients: client_ids that had at least one text fail to deliver today (including automatic follow-ups)
     - pending_followups: ids of all follow-ups still pending at the moment you submit
     - summary: a short plain-English note to the owner
+12. If you cannot fully carry out an owner's instruction (for example, a client can't be texted, or a change doesn't fit), tell the owner with message_owner what was not done and why.
 
 Work through each update with tools. When you are done handling an update, reply with a one-line note and no tool call."""
 

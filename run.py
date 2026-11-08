@@ -35,7 +35,12 @@ def load_dotenv():
 
 def rebuild(rec):
     """Rebuild a sandbox from a saved record (state + log) so it can be regraded offline."""
-    sb = Sandbox(load_scenario(rec["scenario"]))
+    scen = load_scenario(rec["scenario"])
+    sb = Sandbox(scen)
+    for step in scen["timeline"]:  # out-of-band bookings count as pre-existing, exactly as apply_step does live
+        for e in step["events"]:
+            if e["type"] == "world":
+                sb.initial_appts[e["appointment"]["id"]] = {**e["appointment"], "status": "booked"}
     st = rec["final_state"]
     sb.clients, sb.appts, sb.followups = st["clients"], st["appointments"], st["followups"]
     sb.threads, sb.drafts, sb.owner_inbox, sb.report = st["threads"], st["drafts"], st["owner_inbox"], st["report"]
