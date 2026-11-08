@@ -65,7 +65,7 @@ Settings are taken from `frontdesk/agent.py` and `run.py`.
 |---|---|
 | Tested models (OpenRouter IDs) | `openai/gpt-6-luna`, `anthropic/claude-haiku-5.5`, `deepseek/deepseek-v4.1-flash`, `z-ai/glm-5.3-flash` |
 | Exact model version and run date | <!-- TODO(results): record run date and any provider/version string returned (raw field model_returned) -->|
-| Temperature | Provider default (not set; `--temperature` flag exists but was not used) <!-- TODO(results): state final choice --> |
+| Temperature | Provider default (not set; no seed). Trial-to-trial variation is part of what we measure. |
 | Max output tokens | 4096 (`--max-tokens`) |
 | Seed | Not set |
 | Interface | OpenRouter chat completions with native tool calling (16 tools) |
@@ -131,4 +131,4 @@ Scenario inputs (model-facing): `scenarios/*.json` and `scenarios/business.json`
 
 ## License
 
-<!-- TODO(author): choose a license and add a LICENSE file. None exists in the repo yet. -->
+MIT. See [LICENSE](LICENSE).
