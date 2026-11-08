@@ -1,0 +1,612 @@
+{
+ "reference": [
+  [
+   [
+    "get_client",
+    {
+     "client_id": "c_priya"
+    }
+   ],
+   [
+    "list_appointments",
+    {
+     "client_id": "c_priya"
+    }
+   ],
+   [
+    "list_availability",
+    {
+     "stylist": "Maya",
+     "date": "2026-11-17",
+     "service": "cut"
+    }
+   ],
+   [
+    "list_availability",
+    {
+     "stylist": "Maya",
+     "date": "2026-11-18",
+     "service": "cut"
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_priya",
+     "text": "No problem! Maya has Tue 11/17 at 3:00, 4:00 or 5:00 PM, or Wed 11/18 any time from 12:00-6:00 PM. Which works?"
+    }
+   ]
+  ],
+  [
+   [
+    "move_appointment",
+    {
+     "appointment_id": "A_101",
+     "new_start": "2026-11-17 15:00"
+    }
+   ],
+   [
+    "cancel_followup",
+    {
+     "followup_id": "F_201"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_priya",
+     "send_at": "2026-11-16 12:00",
+     "text": "Hi Priya! Reminder: your cut with Maya is tomorrow (Tue 11/17) at 3:00 PM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_priya",
+     "text": "Done! You're moved to Tue 11/17 at 3:00 PM with Maya."
+    }
+   ]
+  ],
+  [
+   [
+    "list_availability",
+    {
+     "stylist": "Theo",
+     "date": "2026-11-14",
+     "service": "trim"
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_daniel",
+     "text": "Hi Daniel! Theo has 9:00 or 9:30 AM open Saturday for a trim. Want one?"
+    }
+   ]
+  ],
+  [
+   [
+    "book_appointment",
+    {
+     "client_id": "c_daniel",
+     "stylist": "Theo",
+     "start": "2026-11-14 09:30",
+     "service": "trim"
+    }
+   ],
+   [
+    "schedule_followup",
+    {
+     "client_id": "c_daniel",
+     "send_at": "2026-11-13 12:00",
+     "text": "Hi Daniel! Reminder: your trim with Theo is tomorrow (Sat) at 9:30 AM."
+    }
+   ],
+   [
+    "send_sms",
+    {
+     "client_id": "c_daniel",
+     "text": "You're booked: trim with Theo, Sat 11/14 at 9:30 AM. See you then!"
+    }
+   ]
+  ],
+  [
+   [
+    "submit_day_report",
+    {
+     "appointments_booked": [
+      "A002"
+     ],
+     "appointments_moved": [
+      "A_101"
+     ],
+     "appointments_cancelled": [],
+     "failed_message_clients": [],
+     "pending_followups": [
+      "F_202",
+      "F_203",
+      "F001",
+      "F003"
+     ],
+     "summary": "Moved Priya to Tue 11/17 3pm (Maya), booked Daniel trim Sat 9:30 (Theo). Reminders updated."
+    }
+   ]
+  ]
+ ],
+ "alternatives": {
+  "different_order_and_wording": [
+   [
+    [
+     "send_sms",
+     {
+      "client_id": "c_priya",
+      "text": "Totally fine. Let me check Maya's Tue/Wed afternoons and get back to you."
+     }
+    ]
+   ],
+   [
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_priya",
+      "send_at": "2026-11-16 12:00",
+      "text": "Reminder: Maya, Tuesday Nov 17, 3pm. See you!"
+     }
+    ],
+    [
+     "move_appointment",
+     {
+      "appointment_id": "A_101",
+      "new_start": "2026-11-17 15:00",
+      "stylist": "Maya"
+     }
+    ],
+    [
+     "cancel_followup",
+     {
+      "followup_id": "F_201"
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_priya",
+      "text": "All set for Tuesday at 3 with Maya!"
+     }
+    ]
+   ],
+   [
+    [
+     "send_sms",
+     {
+      "client_id": "c_daniel",
+      "text": "Saturday morning Theo can do 9 or 9:30. Preference?"
+     }
+    ]
+   ],
+   [
+    [
+     "book_appointment",
+     {
+      "client_id": "c_daniel",
+      "stylist": "Theo",
+      "start": "2026-11-14 09:30",
+      "service": "trim"
+     }
+    ],
+    [
+     "send_sms",
+     {
+      "client_id": "c_daniel",
+      "text": "Got you in at 9:30 Saturday with Theo."
+     }
+    ],
+    [
+     "schedule_followup",
+     {
+      "client_id": "c_daniel",
+      "send_at": "2026-11-13 12:00",
+      "text": "Reminder: trim with Theo tomorrow 9:30am."
+     }
+    ]
+   ],
+   [
+    [
+     "list_followups",
+     {}
+    ],
+    [
+     "submit_day_report",
+     {
+      "appointments_booked": [
+       "A002"
+      ],
+      "appointments_moved": [
+       "A_101"
+      ],
+      "appointments_cancelled": [],
+      "failed_message_clients": [],
+      "pending_followups": [
+       "F001",
+       "F_202",
+       "F_203",
+       "F003"
+      ],
+      "summary": "Two changes today."
+     }
+    ]
+   ]
+  ]
+ },
+ "negatives": {
+  "forgot_stale_reminder": {
+   "expect_fail": [
+    "stale_reminder_cancelled_before_send"
+   ],
+   "steps": [
+    [],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_101",
+       "new_start": "2026-11-17 15:00"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_priya",
+       "send_at": "2026-11-16 12:00",
+       "text": "Reminder: your cut is Tue 11/17 at 3:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_priya",
+       "text": "Done! Tue 11/17 at 3:00 PM with Maya."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_daniel",
+       "stylist": "Theo",
+       "start": "2026-11-14 09:30",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_daniel",
+       "send_at": "2026-11-13 12:00",
+       "text": "Reminder: trim tomorrow 9:30."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_daniel",
+       "text": "Booked Sat 9:30 with Theo."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002"
+       ],
+       "appointments_moved": [
+        "A_101"
+       ],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_202",
+        "F_203",
+        "F001",
+        "F003"
+       ],
+       "summary": "ok"
+      }
+     ]
+    ]
+   ]
+  },
+  "report_omits_move": {
+   "expect_fail": [
+    "report_appointments_moved"
+   ],
+   "steps": [
+    [],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_101",
+       "new_start": "2026-11-17 15:00"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_201"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_priya",
+       "send_at": "2026-11-16 12:00",
+       "text": "Reminder: your cut is Tue 11/17 at 3:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_priya",
+       "text": "Done! Tue 11/17 at 3:00 PM with Maya."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_daniel",
+       "stylist": "Theo",
+       "start": "2026-11-14 09:30",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_daniel",
+       "send_at": "2026-11-13 12:00",
+       "text": "Reminder: trim tomorrow 9:30."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_daniel",
+       "text": "Booked Sat 9:30 with Theo."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002"
+       ],
+       "appointments_moved": [],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_202",
+        "F_203",
+        "F001",
+        "F003"
+       ],
+       "summary": "ok"
+      }
+     ]
+    ]
+   ]
+  },
+  "confirmed_before_booking_and_double_reminder": {
+   "expect_fail": [
+    "no_premature_confirmation",
+    "daniel_one_reminder_fri_1200"
+   ],
+   "steps": [
+    [],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_101",
+       "new_start": "2026-11-17 15:00"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_201"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_priya",
+       "send_at": "2026-11-16 12:00",
+       "text": "Reminder: your cut is Tue 11/17 at 3:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_priya",
+       "text": "Done! Tue 11/17 at 3:00 PM with Maya."
+      }
+     ]
+    ],
+    [
+     [
+      "send_sms",
+      {
+       "client_id": "c_daniel",
+       "text": "You're booked Sat 9:30 with Theo!"
+      }
+     ]
+    ],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_daniel",
+       "stylist": "Theo",
+       "start": "2026-11-14 09:30",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_daniel",
+       "send_at": "2026-11-13 12:00",
+       "text": "Reminder: trim tomorrow 9:30."
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_daniel",
+       "send_at": "2026-11-13 12:00",
+       "text": "Reminder: trim tomorrow 9:30!"
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_daniel",
+       "text": "Confirmed."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002"
+       ],
+       "appointments_moved": [
+        "A_101"
+       ],
+       "appointments_cancelled": [],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_202",
+        "F_203",
+        "F001",
+        "F003",
+        "F004"
+       ],
+       "summary": "ok"
+      }
+     ]
+    ]
+   ]
+  },
+  "list_everything_in_report": {
+   "expect_fail": [
+    "report_appointments_booked",
+    "report_appointments_cancelled",
+    "report_pending_followups"
+   ],
+   "steps": [
+    [],
+    [
+     [
+      "move_appointment",
+      {
+       "appointment_id": "A_101",
+       "new_start": "2026-11-17 15:00"
+      }
+     ],
+     [
+      "cancel_followup",
+      {
+       "followup_id": "F_201"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_priya",
+       "send_at": "2026-11-16 12:00",
+       "text": "Reminder: your cut is Tue 11/17 at 3:00 PM."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_priya",
+       "text": "Done! Tue 11/17 at 3:00 PM with Maya."
+      }
+     ]
+    ],
+    [],
+    [
+     [
+      "book_appointment",
+      {
+       "client_id": "c_daniel",
+       "stylist": "Theo",
+       "start": "2026-11-14 09:30",
+       "service": "trim"
+      }
+     ],
+     [
+      "schedule_followup",
+      {
+       "client_id": "c_daniel",
+       "send_at": "2026-11-13 12:00",
+       "text": "Reminder: trim tomorrow 9:30."
+      }
+     ],
+     [
+      "send_sms",
+      {
+       "client_id": "c_daniel",
+       "text": "Booked Sat 9:30 with Theo."
+      }
+     ]
+    ],
+    [
+     [
+      "submit_day_report",
+      {
+       "appointments_booked": [
+        "A002",
+        "A_101",
+        "A_102",
+        "A_103"
+       ],
+       "appointments_moved": [
+        "A_101"
+       ],
+       "appointments_cancelled": [
+        "A_101",
+        "A_102",
+        "A_103",
+        "A002"
+       ],
+       "failed_message_clients": [],
+       "pending_followups": [
+        "F_201",
+        "F_202",
+        "F_203",
+        "F001",
+        "F003"
+       ],
+       "summary": "ok"
+      }
+     ]
+    ]
+   ]
+  }
+ }
+}

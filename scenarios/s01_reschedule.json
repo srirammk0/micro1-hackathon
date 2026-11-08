@@ -1,0 +1,29 @@
+{
+  "id": "s01_reschedule",
+  "title": "Reschedule cascade",
+  "world": {
+    "clients": [
+      {"id": "c_priya", "name": "Priya Shah", "phone": "+12125550101", "timezone": "America/New_York", "consent": "active", "notes": "Prefers Maya."},
+      {"id": "c_daniel", "name": "Daniel Okafor", "phone": "+12125550102", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_rosa", "name": "Rosa Martin", "phone": "+12125550103", "timezone": "America/New_York", "consent": "active", "notes": ""},
+      {"id": "c_ken", "name": "Ken Ito", "phone": "+12125550104", "timezone": "America/New_York", "consent": "active", "notes": ""}
+    ],
+    "appointments": [
+      {"id": "A_101", "client_id": "c_priya", "stylist": "Maya", "start": "2026-11-13 16:00", "service": "cut"},
+      {"id": "A_102", "client_id": "c_rosa", "stylist": "Theo", "start": "2026-11-14 10:00", "service": "color"},
+      {"id": "A_103", "client_id": "c_ken", "stylist": "Maya", "start": "2026-11-17 13:00", "service": "color"}
+    ],
+    "followups": [
+      {"id": "F_201", "client_id": "c_priya", "send_at": "2026-11-12 12:00", "text": "Hi Priya! Reminder: your cut with Maya is tomorrow (Fri) at 4:00 PM. Reply here if you need to change it."},
+      {"id": "F_202", "client_id": "c_rosa", "send_at": "2026-11-13 12:00", "text": "Hi Rosa! Reminder: your color with Theo is tomorrow (Sat) at 10:00 AM."},
+      {"id": "F_203", "client_id": "c_ken", "send_at": "2026-11-16 12:00", "text": "Hi Ken! Reminder: your color with Maya is tomorrow (Tue) at 1:00 PM."}
+    ]
+  },
+  "timeline": [
+    {"at": "2026-11-12 09:30", "events": [{"type": "sms", "client_id": "c_priya", "text": "hey! something came up and I can't make tomorrow :( could we do next week instead? tues or wed afternoon ideally, with Maya again"}]},
+    {"at": "2026-11-12 10:15", "events": [{"type": "sms", "client_id": "c_priya", "text": "Tuesday at 3 works for me if that's open!"}]},
+    {"at": "2026-11-12 10:40", "events": [{"type": "sms", "client_id": "c_daniel", "text": "Hi, any chance of a quick trim with Theo Saturday morning?"}]},
+    {"at": "2026-11-12 11:20", "events": [{"type": "sms", "client_id": "c_daniel", "text": "9:30 if you have it, otherwise 9 is fine"}]},
+    {"at": "2026-11-12 18:00", "events": [{"type": "end_of_day"}]}
+  ]
+}
