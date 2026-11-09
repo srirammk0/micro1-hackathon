@@ -4,7 +4,7 @@ An agent runs the text messages and calendar for a small salon for one simulated
 
 **Key finding:** the trust gap is a tier gap. Frontier models (Sonnet 5.5, GPT-6.1 Sol, Gemini 4 Argon) passed 71 of 72 trials. The fast, cheap tier that actually gets deployed for high-volume texting (Haiku 5.5, GPT-6 Luna, DeepSeek v4.1 Flash, GLM-5.3 Flash) passed 65% of 160, and in 36 of those trials the calendar ended up right but the agent still broke a rule or misreported its day. One scenario (quiet hours in the client's own timezone) was passed by the fast tier 1 time out of 20.
 
-**Video:** TODO
+**Video:** https://youtu.be/uXCOq7Ztsa4
 
 **Results page:** `python scripts/make_site.py` builds `docs/index.html` from the saved runs (no key needed); open it in a browser.
 
