@@ -6,7 +6,7 @@ An agent runs the text messages and calendar for a small salon for one simulated
 
 **Video:** TODO
 
-**Results page:** open `docs/index.html` in a browser.
+**Results page:** `python scripts/make_site.py` builds `docs/index.html` from the saved runs (no key needed); open it in a browser.
 
 ## Why this
 

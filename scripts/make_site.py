@@ -73,6 +73,7 @@ def main(run_dirs):
     }
     tpl = (ROOT / "scripts" / "site_template.html").read_text()
     out = ROOT / "docs" / "index.html"
+    out.parent.mkdir(exist_ok=True)
     out.write_text(tpl.replace("/*__DATA__*/null", json.dumps(data, separators=(",", ":")).replace("</", "<\\/")))
     print(f"wrote {out} ({out.stat().st_size // 1024} KB, {len(trials)} trials)")
 
