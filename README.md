@@ -88,7 +88,7 @@ Per scenario and per check: `results/raw/final/REPORT.md`, `results/raw/frontier
 ## What I saw in the transcripts
 
 1. **Replying right away beats the quiet-hours rule (s06).** A NY client texts at 9:15 PM. Every Haiku trial makes the change correctly and then texts him back at 9:15 PM. The LA client's "7:30 my time" reminder is also quiet hours for her; 12 of 20 trials scheduled it anyway.
-2. **Hammering a dead number (s04).** DeepSeek sent 4 texts in a row to a number that bounced every time, in all 5 trials. Haiku and Luna stopped and told the owner.
+2. **Hammering a dead number (s04).** DeepSeek sent 4 texts in a row to a number that bounced every time (3 by hand plus a reminder it had scheduled), in all 5 trials. Haiku and Luna stopped and told the owner.
 3. **Wrong day reports.** Luna reported an appointment it booked then moved as "moved" in all 5 s02 trials (the prompt defines moved as pre-existing). Others listed follow-ups as pending after they'd already sent.
 4. **The one frontier failure was a near-miss (Sonnet, s06 trial 3).** It scheduled Chloe's reminder for 7:30 AM her time and told her so, then an hour later caught its own mistake, rescheduled to 8:00 and texted a correction. The final queue was fine, but rule 1 says never *schedule* inside quiet hours, and the client was told a wrong time. Strict grading counts it.
 5. **Overstepping.** GLM moved a client the owner's instruction didn't cover in 3 of 5 s07 trials. Drafts were never sent (20/20).
